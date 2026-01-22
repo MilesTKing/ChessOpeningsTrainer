@@ -1,13 +1,13 @@
 /**
  * @jest-environment jsdom
  */
-import {TrainingManager} from '../../scripts/TrainingManager.js'
+import {TrainingSessionManager} from '../../scripts/TrainingSessionManager.js'
 
 describe("Chess Game Logic", () => {
     let trainingModule
     beforeEach(() => {
         document.body.innerHTML = `<div id="trainingBoard" style="width: 400px"></div>`
-        trainingModule = TrainingManager()
+        trainingModule = TrainingSessionManager()
     })
 
     test("Initialize Training Logic", () => {

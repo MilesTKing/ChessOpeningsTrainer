@@ -1,5 +1,5 @@
 import '../../node_modules/@chrisoakman/chessboard2/dist/chessboard2.css'
-import {TrainingManager} from '../TrainingManager.js'
+import {TrainingSessionManager} from '../TrainingSessionManager.js'
 
-TrainingManager("trainingBoard")
+TrainingSessionManager("trainingBoard")
 
