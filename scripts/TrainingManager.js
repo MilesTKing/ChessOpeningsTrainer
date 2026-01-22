@@ -3,12 +3,10 @@ import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 
 function TrainingManager(boardElementId = "trainingBoard") {
     const logicalBoard = new Chess()
-    let boardState
     const config = {
         position: 'start',
         draggable: true,
         onDrop,
-        onDragStart: startMove,
     }
     const graphicalBoard = Chessboard2(boardElementId, config)
 
@@ -38,9 +36,6 @@ function TrainingManager(boardElementId = "trainingBoard") {
         }
     }
 
-    function startMove(){
-        boardState = logicalBoard.fen()
-    }
 }
 
 export {TrainingManager, Chess}
