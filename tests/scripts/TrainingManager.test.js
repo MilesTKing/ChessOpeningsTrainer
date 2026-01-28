@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import {TrainingSessionManager} from '../../scripts/TrainingSessionManager.js'
+import {TrainingSessionManager} from '../../scripts/TrainingSessionManager.ts'
 
 describe("Chess Game Logic", () => {
     let trainingModule
@@ -14,7 +14,7 @@ describe("Chess Game Logic", () => {
         expect(trainingModule).toBeDefined()
     })
     test('Prepare board initializes board', () => {
-        trainingModule.prepareForTraining()
+        trainingModule.prepareForTraining('w', [[]])
         expect(trainingModule.getFen()).toEqual('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
     })
 

@@ -11,30 +11,31 @@ function TrainingSessionManager(boardElementId = "trainingBoard") {
     const graphicalBoard = Chessboard2(boardElementId, config);
     let userColor;
     let trainingPathway; //List of user moves and potential opponent responses.
+    let trainingMove
 
     /**
      * Initializes chess state and UI chess board
-     * @param {string} selectedOpeningColor - The user's chosen perspective of the training session
+
      */
-    function prepareForTraining(selectedOpeningColor = 'w') {
+    function prepareForTraining(selectedOpeningColor = 'w', selectedTrainingPath = Array<Array<string>>) {
         graphicalBoard.start()
         logicalBoard.reset()
         userColor = selectedOpeningColor
-        trainingPathway = []
+        trainingPathway = selectedTrainingPath
     }
 
     /**
      * Returns the FEN of the current board position
      * @returns {string}
      */
-    function getFen() {
+    function getFen(): string {
         return logicalBoard.fen()
     }
     /**
      * Fires when piece is dropped on chessboard. Returning 'snapback' to chessBoard2 reverts drop.
      * @param {Object} pieceMoved - The chessBoard library representation of piece object that was dropped
      */
-    function onDrop (pieceMoved) {
+    function onDrop (pieceMoved: string) {
 
         try {
             logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
