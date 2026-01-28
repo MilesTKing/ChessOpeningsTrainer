@@ -17,8 +17,7 @@ function TrainingSessionManager(boardElementId = "trainingBoard") {
      * Initializes chess state and UI chess board
 
      */
-    function prepareForTraining(selectedOpeningColor = 'w', selectedTrainingPath = Array<Array<string>>) {
-        graphicalBoard.start()
+    function prepareForTraining(selectedOpeningColor: 'w' | 'b', selectedTrainingPath: string[]) {
         logicalBoard.reset()
         userColor = selectedOpeningColor
         trainingPathway = selectedTrainingPath
