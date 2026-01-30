@@ -6,7 +6,7 @@ function TrainingSessionManager(boardElementId = "trainingBoard") {
         position: 'start',
         draggable: true,
         onDrop,
-    };
+    }
     const logicalBoard = new Chess();
     const graphicalBoard = Chessboard2(boardElementId, config);
     let userColor;
@@ -17,10 +17,10 @@ function TrainingSessionManager(boardElementId = "trainingBoard") {
      * Initializes chess state and UI chess board
 
      */
-    function prepareForTraining(selectedOpeningColor: 'w' | 'b', selectedTrainingPath: string[]) {
+    function prepareForTraining(selectedOpeningColor: 'w' | 'b', selectedTrainingPath) {
         logicalBoard.reset()
         userColor = selectedOpeningColor
-        trainingPathway = selectedTrainingPath
+        trainingPathway
     }
 
     /**
@@ -48,4 +48,4 @@ function TrainingSessionManager(boardElementId = "trainingBoard") {
 
 }
 
-export {TrainingSessionManager, Chess}
+export {TrainingSessionManager}

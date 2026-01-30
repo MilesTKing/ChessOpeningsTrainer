@@ -24,7 +24,7 @@
 
     "skipLibCheck": true,
 
-    "lib": ["ES2015", "DOM"],
+    "lib": ["ESNext", "DOM"],
     "types": []
   },
   "include": ["scripts/**/*"],
