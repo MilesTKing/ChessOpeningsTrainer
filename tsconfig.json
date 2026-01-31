@@ -6,6 +6,7 @@
     "typeRoots": ["./src/types", "./node_modules/@types"],
     "strict": true,
 
+    "noEmitOnError": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
