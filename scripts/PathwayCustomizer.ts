@@ -1,21 +1,21 @@
 import {Chess} from 'chess.js'
 import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 
-function PathwayCustomizer(){
-    type playerColor = 'w' | 'b'
+function PathwayCustomizer(boardElementId: string){
+    type playerColor = 'white' | 'black'
     interface Node {
         fen: string;
         nextPositions: Map<string, Node>;
     }
-    const logicalBoard = new Chess();
-    const graphicalBoard = Chessboard2(boardElementId, config);
-    let userColor: playerColor;
-
     const config = {
         position: 'start',
         draggable: true,
-        onDrop,
+        onDrop
     }
+    const logicalBoard = new Chess();
+    const graphicalBoard = Chessboard2(boardElementId, config);
+
+    let userColor: playerColor;
     function createNode(fen: string): Node{
         let nextPositions: Map<string, Node> = new Map();
         return {fen, nextPositions}
@@ -29,8 +29,7 @@ function PathwayCustomizer(){
     }
 
 
-    function onDrop (pieceMoved: string) {
-
+    function onDrop (pieceMoved: ChessboardDropEvent) {
         try {
             logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
         }

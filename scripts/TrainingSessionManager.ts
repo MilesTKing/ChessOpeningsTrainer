@@ -31,11 +31,11 @@ function TrainingSessionManager(boardElementId = "trainingBoard") {
         return logicalBoard.fen()
     }
     /**
-     * Fires when piece is dropped on chessboard. Returning 'snapback' to chessBoard2 reverts drop.
-     * @param {Object} pieceMoved - The chessBoard library representation of piece object that was dropped
+     * Event listener for when piece is dropped onto a square. Returning 'snapback' to chessBoard2 reverts drop.
+     * pieceMoved - The chessBoard library representation of piece object that was dropped
      */
-    function onDrop (pieceMoved: string) {
-
+    function onDrop (pieceMoved: ChessboardDropEvent) {
+        console.log(pieceMoved)
         try {
             logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
         }
