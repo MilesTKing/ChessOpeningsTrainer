@@ -3,10 +3,11 @@ import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 
 function TrainingSessionManager(boardElementId = "trainingBoard") {
     type playerColor = 'white' | 'black'
-    const config = {
+    const config: Chessboard2Config = {
         position: 'start',
         draggable: true,
         onDrop,
+        showErrors: 'console',
     }
     const logicalBoard = new Chess();
     const graphicalBoard = Chessboard2(boardElementId, config);

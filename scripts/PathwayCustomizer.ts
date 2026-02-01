@@ -7,15 +7,16 @@ function PathwayCustomizer(boardElementId: string){
         fen: string;
         nextPositions: Map<string, Node>;
     }
-    const config = {
+    const config: Chessboard2Config = {
         position: 'start',
         draggable: true,
-        onDrop
+        onDrop,
+        showErrors: 'console'
     }
     let userColor: playerColor;
     const logicalBoard = new Chess();
     const graphicalBoard = Chessboard2(boardElementId, config);
-    
+
     function createNode(fen: string): Node{
         let nextPositions: Map<string, Node> = new Map();
         return {fen, nextPositions}
