@@ -12,10 +12,10 @@ function PathwayCustomizer(boardElementId: string){
         draggable: true,
         onDrop
     }
+    let userColor: playerColor;
     const logicalBoard = new Chess();
     const graphicalBoard = Chessboard2(boardElementId, config);
-
-    let userColor: playerColor;
+    
     function createNode(fen: string): Node{
         let nextPositions: Map<string, Node> = new Map();
         return {fen, nextPositions}

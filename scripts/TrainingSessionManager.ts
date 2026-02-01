@@ -2,6 +2,7 @@ import {Chess} from 'chess.js'
 import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 
 function TrainingSessionManager(boardElementId = "trainingBoard") {
+    type playerColor = 'white' | 'black'
     const config = {
         position: 'start',
         draggable: true,
@@ -9,7 +10,7 @@ function TrainingSessionManager(boardElementId = "trainingBoard") {
     }
     const logicalBoard = new Chess();
     const graphicalBoard = Chessboard2(boardElementId, config);
-    let userColor;
+    let userColor: playerColor;
     let trainingPathway; //List of user moves and potential opponent responses.
     let trainingMove
 
@@ -17,7 +18,7 @@ function TrainingSessionManager(boardElementId = "trainingBoard") {
      * Initializes chess state and UI chess board
 
      */
-    function prepareForTraining(selectedOpeningColor: 'w' | 'b', selectedTrainingPath) {
+    function prepareForTraining(selectedOpeningColor: playerColor, selectedTrainingPath: string) {
         logicalBoard.reset()
         userColor = selectedOpeningColor
         trainingPathway
