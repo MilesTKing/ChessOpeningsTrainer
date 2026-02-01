@@ -11,6 +11,7 @@ describe("Chess Game Logic", () => {
     beforeEach(() => {
         document.body.innerHTML = `<div id="trainingBoard" style="width: 400px"></div>`
         trainingModule = TrainingSessionManager()
+        trainingModule.prepareForTraining('')
     })
 
     test("Initialize Training Logic", () => {

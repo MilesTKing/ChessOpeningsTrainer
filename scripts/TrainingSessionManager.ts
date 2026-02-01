@@ -9,19 +9,18 @@ function TrainingSessionManager(boardElementId = "trainingBoard") {
         onDrop,
         showErrors: 'console',
     }
-    const logicalBoard = new Chess();
-    const graphicalBoard = Chessboard2(boardElementId, config);
     let userColor: playerColor;
     let trainingPathway; //List of user moves and potential opponent responses.
     let trainingMove
-
+    let logicalBoard= new Chess()
+    let graphicalBoard: Chessboard2Instance
     /**
      * Initializes chess state and UI chess board
 
      */
-    function prepareForTraining(selectedOpeningColor: playerColor, selectedTrainingPath: string) {
+    function prepareForTraining(selectedOpeningColor: playerColor= 'white', selectedTrainingPath: string) {
+        graphicalBoard = Chessboard2(boardElementId, config);
         logicalBoard.reset()
-        userColor = selectedOpeningColor
         trainingPathway
     }
 

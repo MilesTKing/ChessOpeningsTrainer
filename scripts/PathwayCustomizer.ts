@@ -7,27 +7,6 @@ function PathwayCustomizer(boardElementId: string){
         fen: string;
         nextPositions: Map<string, Node>;
     }
-    const config: Chessboard2Config = {
-        position: 'start',
-        draggable: true,
-        onDrop,
-        showErrors: 'console'
-    }
-    let userColor: playerColor;
-    const logicalBoard = new Chess();
-    const graphicalBoard = Chessboard2(boardElementId, config);
-
-    function createNode(fen: string): Node{
-        let nextPositions: Map<string, Node> = new Map();
-        return {fen, nextPositions}
-    }
-    function addPossibleMove(currentPosition: Node, moveToAdd: string){
-        const newMoveNode = createNode(moveToAdd)
-        currentPosition.nextPositions.set(moveToAdd, newMoveNode);
-    }
-    function removePossibleMove(currentPosition: Node, moveToRemove: string){
-        currentPosition.nextPositions.delete(moveToRemove);
-    }
 
 
     function onDrop (pieceMoved: ChessboardDropEvent) {
@@ -38,6 +17,34 @@ function PathwayCustomizer(boardElementId: string){
             console.error(e)
             return 'snapback'
         }
+    }
+    const config: Chessboard2Config = {
+        position: 'start',
+        draggable: true,
+        onDrop,
+        showErrors: 'console'
+    }
+    let userColor: playerColor;
+    const logicalBoard = new Chess()
+    let graphicalBoard
+
+    function createNode(fen: string): Node{
+        let nextPositions: Map<string, Node> = new Map();
+        return {fen, nextPositions}
+    }
+    function addPossibleMove(currentPosition: Node, moveToAdd: string){
+        const newMoveNode = createNode(moveToAdd)
+        currentPosition.nextPositions.set(moveToAdd, newMoveNode);
+    }
+
+    function removePossibleMove(currentPosition: Node, moveToRemove: string){
+        currentPosition.nextPositions.delete(moveToRemove);
+    }
+
+
+    function beginPathCreation(boardElementId: string, playercolor: playerColor = 'white'){
+        logicalBoard.reset()
+        graphicalBoard = Chessboard2(boardElementId, config);
     }
 }
 export {PathwayCustomizer}
