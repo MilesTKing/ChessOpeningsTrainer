@@ -9,9 +9,9 @@ const document = window.document;
 describe("Chess Game Logic", () => {
     let trainingModule
     beforeEach(() => {
-        document.body.innerHTML = `<div id="trainingBoard" style="width: 400px"></div>`
+        document.body.innerHTML = `<div id="chessboard" style="width: 400px"></div>`
         trainingModule = TrainingSessionManager()
-        trainingModule.prepareForTraining('')
+        trainingModule.prepareForTraining()
     })
 
     test("Initialize Training Logic", () => {

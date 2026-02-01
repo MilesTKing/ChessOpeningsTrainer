@@ -1,7 +1,7 @@
 import {Chess} from 'chess.js'
 import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 
-function PathwayCustomizer(boardElementId: string){
+function PathwayCustomizer(){
     type playerColor = 'white' | 'black'
     interface Node {
         fen: string;
@@ -11,7 +11,9 @@ function PathwayCustomizer(boardElementId: string){
 
     function onDrop (pieceMoved: ChessboardDropEvent) {
         try {
-            logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
+            const move = logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
+            currentPositionNode= addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
+
         }
         catch (e) {
             console.error(e)
@@ -27,14 +29,21 @@ function PathwayCustomizer(boardElementId: string){
     let userColor: playerColor;
     const logicalBoard = new Chess()
     let graphicalBoard
+    let currentPositionNode: Node
 
     function createNode(fen: string): Node{
         let nextPositions: Map<string, Node> = new Map();
         return {fen, nextPositions}
     }
-    function addPossibleMove(currentPosition: Node, moveToAdd: string){
-        const newMoveNode = createNode(moveToAdd)
+
+    /**
+     * Adds a node to the current position's next position's list.
+     * @returns {Node} Returns the node that was added to passed in Node's next position list.
+     */
+    function addPossibleMove(currentPosition: Node, fen: string, moveToAdd: string): Node{
+        const newMoveNode = createNode(fen)
         currentPosition.nextPositions.set(moveToAdd, newMoveNode);
+        return newMoveNode
     }
 
     function removePossibleMove(currentPosition: Node, moveToRemove: string){
@@ -42,9 +51,12 @@ function PathwayCustomizer(boardElementId: string){
     }
 
 
-    function beginPathCreation(boardElementId: string, playercolor: playerColor = 'white'){
+    function beginPathCreation(boardElementId: string = "chessboard", playercolor: playerColor = 'white'){
         logicalBoard.reset()
         graphicalBoard = Chessboard2(boardElementId, config);
+        currentPositionNode = createNode(logicalBoard.fen())
     }
+
+    return {beginPathCreation}
 }
 export {PathwayCustomizer}

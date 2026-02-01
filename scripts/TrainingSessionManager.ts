@@ -1,7 +1,7 @@
 import {Chess} from 'chess.js'
 import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 
-function TrainingSessionManager(boardElementId = "trainingBoard") {
+function TrainingSessionManager() {
     type playerColor = 'white' | 'black'
     const config: Chessboard2Config = {
         position: 'start',
@@ -18,7 +18,7 @@ function TrainingSessionManager(boardElementId = "trainingBoard") {
      * Initializes chess state and UI chess board
 
      */
-    function prepareForTraining(selectedOpeningColor: playerColor= 'white', selectedTrainingPath: string) {
+    function prepareForTraining(boardElementId = "chessboard", selectedOpeningColor: playerColor= 'white') {
         graphicalBoard = Chessboard2(boardElementId, config);
         logicalBoard.reset()
         trainingPathway
