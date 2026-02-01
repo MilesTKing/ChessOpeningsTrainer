@@ -63,5 +63,5 @@ declare interface Chessboard2Instance {
 }
 
 declare interface PositionObject {
-
+    //Not doing this shit rn, see https://chessboardjs.com/v2/docs on how to implement if decided.
 }
