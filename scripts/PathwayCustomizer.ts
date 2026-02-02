@@ -12,8 +12,15 @@ function PathwayCustomizer(){
     function onDrop (pieceMoved: ChessboardDropEvent) {
         try {
             const move = logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
-            currentPositionNode= addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
-
+            currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
+            const savedPosition = currentPositionNode
+            const PositionButton =   document.createElement('button')
+            PositionButton.addEventListener('click', () => {
+                logicalBoard.load(savedPosition.fen)
+                graphicalBoard.position(savedPosition.fen)
+                currentPositionNode = savedPosition
+            })
+            document.body.appendChild(PositionButton)
         }
         catch (e) {
             console.error(e)
@@ -28,7 +35,7 @@ function PathwayCustomizer(){
     }
     let userColor: playerColor;
     const logicalBoard = new Chess()
-    let graphicalBoard
+    let graphicalBoard: Chessboard2Instance
     let currentPositionNode: Node
 
     function createNode(fen: string): Node{
