@@ -1,5 +1,5 @@
 import { beforeEach , describe, test , expect} from 'vitest'
-import {TrainingSessionManager} from '../../scripts/TrainingSessionManager.ts'
+import {TrainingSessionManager} from '../../src/TrainingSessionManager.ts'
 import { Window } from 'happy-dom';
 
 const window = new Window({ url: 'https://localhost:8080' });

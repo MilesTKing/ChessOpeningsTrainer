@@ -1,7 +1,8 @@
 import {Chess} from 'chess.js'
 import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
+import {PathwayMoveRenderer} from "./types/PathwayTypes";
 
-function PathwayCustomizer(){
+function PathwayCustomizer(ui: PathwayMoveRenderer) {
     type playerColor = 'white' | 'black'
     interface Node {
         fen: string;
@@ -12,15 +13,8 @@ function PathwayCustomizer(){
     function onDrop (pieceMoved: ChessboardDropEvent) {
         try {
             const move = logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
+            ui.onMoveAddition({move: move.san, possibleNextMoveCount: currentPositionNode.nextPositions.size})
             currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
-            const savedPosition = currentPositionNode
-            const PositionButton =   document.createElement('button')
-            PositionButton.addEventListener('click', () => {
-                logicalBoard.load(savedPosition.fen)
-                graphicalBoard.position(savedPosition.fen)
-                currentPositionNode = savedPosition
-            })
-            document.body.appendChild(PositionButton)
         }
         catch (e) {
             console.error(e)
