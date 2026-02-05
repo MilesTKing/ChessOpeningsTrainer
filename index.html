@@ -3,9 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>TrainingPage</title>
-  <script type = "module" defer src = "scripts/pages/PathwayCustomizer.ts"></script>
+  <script type = "module" defer src = "./src/pages/PathwayCustomizer.ts"></script>
+  <link rel="stylesheet" href="./main.css">
 </head>
 <body>
+<div id="gameboard-container">
+
   <div id="chessboard" style="width: 50%"></div>
+  <div id="gameboard-sidebar">
+    <div id="sideboard-title"></div>
+    <div id="sideboard-navbar"></div>
+    <div id="move-list-graph"></div>
+    <div id="sideboard-controls"></div>
+
+  </div>
+</div>
 </body>
 </html>
