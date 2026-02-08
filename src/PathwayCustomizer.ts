@@ -17,6 +17,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
             currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
         }
         catch (e) {
+            console.error(e)
             return 'snapback'
         }
     }
@@ -30,6 +31,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     const logicalBoard = new Chess()
     let graphicalBoard: Chessboard2Instance
     let currentPositionNode: Node
+
 
     function createNode(fen: string): Node{
         let nextPositions: Map<string, Node> = new Map();

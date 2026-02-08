@@ -4,7 +4,7 @@
 }
 #chessboard{
     flex: auto;
-    max-width: 50rem;
+    max-width: 50%;
 }
 #gameboard-sidebar{
     flex: auto;
@@ -15,10 +15,14 @@
     flex-direction: column;
 }
 #sideboard-title{
+    background-color: purple;
     flex: auto;
+    height: 3rem;
 }
 #sideboard-navbar{
+    background-color: green;
     flex: auto;
+    height: 4rem;
 }
 #move-list-graph{
     flex: 4 auto;
@@ -33,6 +37,7 @@
     max-width: 800px;
 }
 #sideboard-controls{
+    background-color: pink;
     flex: auto;
     max-height: 10rem;
 }
