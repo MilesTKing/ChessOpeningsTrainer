@@ -1,5 +1,6 @@
 
 function moveListView(){
+    document.getElementById("move-list-graph")
     function onIllegalMove(){
 
     }

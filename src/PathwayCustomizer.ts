@@ -17,7 +17,6 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
             currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
         }
         catch (e) {
-            console.error(e)
             return 'snapback'
         }
     }
