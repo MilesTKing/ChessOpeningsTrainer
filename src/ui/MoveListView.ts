@@ -13,7 +13,9 @@ function moveListView(){
                     selector: 'node',
                     style: {
                         'background-color': '#666',
-                        'label': 'data(move)'
+                        'label': 'data(move)',
+                        'text-halign': "center",
+                        'text-valign': 'center'
                     }
                 },
 
