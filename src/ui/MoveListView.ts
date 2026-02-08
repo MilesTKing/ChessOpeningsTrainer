@@ -13,6 +13,8 @@ function moveListView(){
                     selector: 'node',
                     style: {
                         'background-color': '#666',
+                        'width': '2em',
+                        'height': '2em',
                         'label': 'data(move)',
                         'text-halign': "center",
                         'text-valign': 'center'
@@ -36,9 +38,13 @@ function moveListView(){
     function onIllegalMove(){
 
     }
-    function onMoveAddition(data: {move: string, possibleNextMoveCount: number}) {
+
+    function onMoveAddition(data: {move: string, piece: string, possibleNextMoveCount: number}) {
         const newNode= moveListGraph.add({data: {id: nodeIdIndex.toString(), move: data.move}});
+        newNode.style('background-image', `${data.piece}.svg`)
+
         if(nodeIdIndex > 0){
+            newNode.position('y', moveListGraph.getElementById(activeNodeId).position().y + 50)
             moveListGraph.add({data: {source: activeNodeId, target: newNode.id()}});
         }
         activeNodeId = newNode.id();

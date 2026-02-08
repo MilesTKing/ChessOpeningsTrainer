@@ -13,8 +13,9 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     function onDrop (pieceMoved: ChessboardDropEvent) {
         try {
             const move = logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
-            ui.onMoveAddition({move: move.san, possibleNextMoveCount: currentPositionNode.nextPositions.size})
+            ui.onMoveAddition({move: move.san, piece: pieceMoved.piece, possibleNextMoveCount: currentPositionNode.nextPositions.size})
             currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
+            console.log(pieceMoved)
         }
         catch (e) {
             console.error(e)
