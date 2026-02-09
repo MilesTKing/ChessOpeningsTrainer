@@ -1,18 +1,21 @@
+body{
+    background-color: white;
+}
 #gameboard-container{
     display: flex;
     gap: .3rem;
 }
 #chessboard{
     flex: auto;
-    max-width: 50%;
+    max-width: 50%
 }
 #gameboard-sidebar{
     flex: auto;
-    max-width: 50rem;
     background-color: darkgray;
     border: 2px solid black;
     display: flex;
     flex-direction: column;
+    max-width: 50%;
 }
 #sideboard-title{
     background-color: purple;
@@ -25,7 +28,7 @@
     height: 4rem;
 }
 #move-list-graph{
-    flex: 4 auto;
+    flex: auto;
 
     display: flex;
     flex-direction: column;
@@ -34,15 +37,9 @@
     gap: 10px;
     background-color: lightgray;
     width: 100%;
-    max-width: 800px;
 }
 #sideboard-controls{
     background-color: pink;
     flex: auto;
     max-height: 10rem;
-}
-.move-list-node{
-    flex: 1;
-    width: 40px;
-    height: 40px;
 }
