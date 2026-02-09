@@ -15,7 +15,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
             const move = logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
             ui.onMoveAddition({move: move.san, piece: pieceMoved.piece, possibleNextMoveCount: currentPositionNode.nextPositions.size})
             currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
-            console.log(pieceMoved)
+            graphicalBoard.position(logicalBoard.fen())
         }
         catch (e) {
             console.error(e)

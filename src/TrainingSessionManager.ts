@@ -39,6 +39,7 @@ function TrainingSessionManager() {
         console.log(pieceMoved)
         try {
             logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
+            graphicalBoard.position(logicalBoard.fen())
         }
         catch (e) {
             console.error(e)

@@ -52,7 +52,7 @@ function moveListView(){
             newNode.position('y', container.getBoundingClientRect().height / 20)
         }
 
-        if(nodeIdIndex > 0){
+        else{
             newNode.position('x', moveListGraph.getElementById(activeNodeId).position().x)
             newNode.position('y', moveListGraph.getElementById(activeNodeId).position().y + 50)
             moveListGraph.add({data: {source: activeNodeId, target: newNode.id()}});
