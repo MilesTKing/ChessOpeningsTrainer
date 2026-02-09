@@ -2,13 +2,26 @@ import {Chess} from 'chess.js'
 import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 import {PathwayMoveRenderer} from "./types/PathwayTypes";
 
-function PathwayCustomizer(ui: PathwayMoveRenderer) {
-    type playerColor = 'white' | 'black'
-    interface Node {
-        fen: string;
-        nextPositions: Map<string, Node>;
-    }
+interface Node {
+    fen: string;
+    nextPositions: Map<string, Node>;
+}
 
+type playerColor = 'white' | 'black'
+
+function PathwayCustomizer(ui: PathwayMoveRenderer) {
+
+
+    let userColor: playerColor;
+    const logicalBoard = new Chess()
+    let graphicalBoard: Chessboard2Instance
+    let currentPositionNode: Node
+    const config: Chessboard2Config = {
+        position: 'start',
+        draggable: true,
+        onDrop,
+        showErrors: 'console'
+    }
 
     function onDrop (pieceMoved: ChessboardDropEvent) {
         try {
@@ -22,16 +35,6 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
             return 'snapback'
         }
     }
-    const config: Chessboard2Config = {
-        position: 'start',
-        draggable: true,
-        onDrop,
-        showErrors: 'console'
-    }
-    let userColor: playerColor;
-    const logicalBoard = new Chess()
-    let graphicalBoard: Chessboard2Instance
-    let currentPositionNode: Node
 
 
     function createNode(fen: string): Node{
