@@ -9,9 +9,12 @@ function Chessboard(boardElementId: string, onDrop: onDropEvent)  {
     }
     const graphicalBoard = Chessboard2(boardElementId, config);
 
-    function setPosition(move: string){
+    function setPosition(position: string){
+        graphicalBoard.position(position)
+    }
+    function setMove(move: string){
         graphicalBoard.move(move);
     }
-    return {setPosition}
+    return {setMove, setPosition}
 }
 export {Chessboard}

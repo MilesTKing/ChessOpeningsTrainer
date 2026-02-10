@@ -16,14 +16,17 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     const logicalBoard = new Chess()
     let graphicalBoard: Chessboard2Instance
     let currentPositionNode: Node
-
+    let nodeIdCounter= 0
+    const nodeIdMap: Map<string, Node> = new Map()
     /**
      * Validates and makes move, returning boolean that correlates to the validity of the move.
      */
     function makeMove (sourceSquare: string, targetSquare: string){
         const move = logicalBoard.move({from: sourceSquare, to: targetSquare})
         currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
-        return move.san
+        const id= nodeIdCounter
+        setNodeId(currentPositionNode)
+        return {move: move.san, id}
         }
 
 
@@ -52,7 +55,22 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         logicalBoard.reset()
         currentPositionNode = createNode(logicalBoard.fen())
     }
+    function setNodeId(node: Node){
+        nodeIdMap.set(nodeIdCounter.toString(), node)
+        nodeIdCounter++
+    }
+    function getNodeId(nodeId: number){
+        return nodeIdMap.get(nodeId.toString())
+    }
+    function setActiveNode(nodeId: string){
+        const node = nodeIdMap.get(nodeId)
+        if (node){
+            currentPositionNode = node
+            logicalBoard.load(currentPositionNode.fen)
+            return logicalBoard.fen()
+        }
+    }
 
-    return {beginPathCreation, makeMove}
+    return {beginPathCreation, makeMove, setActiveNode}
 }
 export {PathwayCustomizer}

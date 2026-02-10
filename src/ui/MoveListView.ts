@@ -1,5 +1,7 @@
 import cytoscape from "cytoscape";
 
+type nodeSelectionHandler = (nodeId: string) => void;
+
 function moveListView(){
     let activeNodeId: string
     let nodeIdIndex= 0
@@ -22,6 +24,7 @@ function moveListView(){
                         'background-width': '1.2em',
                         'background-height': '1.2em',
                         'background-position-x': '0',
+                        // @ts-ignore
                         'text-margin-x': '.5em'
                     }
                 },
@@ -39,16 +42,12 @@ function moveListView(){
             ],
 
 
-    });
-    function onIllegalMove(){
-
-    }
+    })
 
     /**
      * Creates a graph node as a child of the current node.
-     * @param data
      */
-    function onMoveAddition(data: {move: string, piece: string}) {
+    function onMoveAddition(data: {move: string, piece: string, nodeIdIndex: number}) {
         const newNode= moveListGraph.add({data: {id: nodeIdIndex.toString(), move: data.move}});
         newNode.style('background-image', `${data.piece}.svg`)
         if (nodeIdIndex === 0){
@@ -67,7 +66,15 @@ function moveListView(){
     function onPositionChange() {
 
     }
+    function onIllegalMove(){
 
-    return {onIllegalMove, onMoveAddition, onPositionChange}
+    }
+    function onNodeSelected(eventResponse: nodeSelectionHandler) {
+        moveListGraph.on("select", (e)=>{
+            activeNodeId = e.target.data('id');
+            eventResponse(e.target.data('id'))
+        })
+    }
+    return {onIllegalMove, onMoveAddition, onPositionChange, onNodeSelected};
 }
 export {moveListView}
