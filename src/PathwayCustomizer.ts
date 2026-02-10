@@ -16,23 +16,18 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     const logicalBoard = new Chess()
     let graphicalBoard: Chessboard2Instance
     let currentPositionNode: Node
-    const config: Chessboard2Config = {
-        position: 'start',
-        draggable: true,
-        onDrop,
-        showErrors: 'console'
-    }
 
-    function onDrop (pieceMoved: ChessboardDropEvent) {
+    /**
+     * Validates and makes move, returning boolean that correlates to the validity of the move.
+     */
+    function makeMove (sourceSquare: string, targetSquare: string){
         try {
-            const move = logicalBoard.move({from: pieceMoved.source, to: pieceMoved.target})
-            ui.onMoveAddition({move: move.san, piece: pieceMoved.piece, possibleNextMoveCount: currentPositionNode.nextPositions.size})
+            const move = logicalBoard.move({from: sourceSquare, to: targetSquare})
             currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
-            graphicalBoard.position(logicalBoard.fen())
+            return logicalBoard.fen()
         }
         catch (e) {
             console.error(e)
-            return 'snapback'
         }
     }
 
@@ -59,10 +54,9 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
 
     function beginPathCreation(boardElementId: string = "chessboard", playercolor: playerColor = 'white'){
         logicalBoard.reset()
-        graphicalBoard = Chessboard2(boardElementId, config);
         currentPositionNode = createNode(logicalBoard.fen())
     }
 
-    return {beginPathCreation}
+    return {beginPathCreation, makeMove}
 }
 export {PathwayCustomizer}
