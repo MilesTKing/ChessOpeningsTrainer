@@ -21,15 +21,11 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
      * Validates and makes move, returning boolean that correlates to the validity of the move.
      */
     function makeMove (sourceSquare: string, targetSquare: string){
-        try {
-            const move = logicalBoard.move({from: sourceSquare, to: targetSquare})
-            currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
-            return logicalBoard.fen()
+        const move = logicalBoard.move({from: sourceSquare, to: targetSquare})
+        currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
+        return move.san
         }
-        catch (e) {
-            console.error(e)
-        }
-    }
+
 
 
     function createNode(fen: string): Node{

@@ -44,7 +44,11 @@ function moveListView(){
 
     }
 
-    function onMoveAddition(data: {move: string, piece: string, possibleNextMoveCount: number}) {
+    /**
+     * Creates a graph node as a child of the current node.
+     * @param data
+     */
+    function onMoveAddition(data: {move: string, piece: string}) {
         const newNode= moveListGraph.add({data: {id: nodeIdIndex.toString(), move: data.move}});
         newNode.style('background-image', `${data.piece}.svg`)
         if (nodeIdIndex === 0){
