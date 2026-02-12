@@ -59,18 +59,25 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         nodeIdMap.set(nodeIdCounter.toString(), node)
         nodeIdCounter++
     }
-    function getNodeId(nodeId: number){
-        return nodeIdMap.get(nodeId.toString())
+    function getNodeId(node: Node){
+        for(let [key,value] of nodeIdMap){
+            if (value === node){
+                return key
+            }
+        }
     }
-    function setActiveNode(nodeId: string){
-        const node = nodeIdMap.get(nodeId)
+    function setActiveNode(nodeId: number){
+        const node = nodeIdMap.get(nodeId.toString())
         if (node){
             currentPositionNode = node
             logicalBoard.load(currentPositionNode.fen)
             return logicalBoard.fen()
         }
     }
+    function getActiveNodeId(){
+        return getNodeId(currentPositionNode)
+    }
 
-    return {beginPathCreation, makeMove, setActiveNode}
+    return {beginPathCreation, makeMove, setActiveNode, getActiveNodeId}
 }
 export {PathwayCustomizer}

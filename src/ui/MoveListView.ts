@@ -1,6 +1,6 @@
 import cytoscape from "cytoscape";
 
-type nodeSelectionHandler = (nodeId: string) => void;
+type nodeSelectionHandler = (nodeId: number) => void;
 
 function moveListView(){
     let activeNodeId: string

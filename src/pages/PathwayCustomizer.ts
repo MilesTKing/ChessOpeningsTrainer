@@ -20,7 +20,7 @@ function onDrop (pieceMoved: ChessboardDropEvent) {
         return 'snapback'
     }
 }
-function nodeSelectionHandler(nodeId: string){
+function nodeSelectionHandler(nodeId: number){
     const logicalBoardPosition= pathwayManager.setActiveNode(nodeId)
     if (logicalBoardPosition){
         chessboard.setPosition(logicalBoardPosition)
