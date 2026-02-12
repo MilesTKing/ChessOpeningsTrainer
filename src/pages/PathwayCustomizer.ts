@@ -12,7 +12,7 @@ pathwayManager.beginPathCreation()
 function onDrop (pieceMoved: ChessboardDropEvent) {
     try {
         const managerMove= pathwayManager.makeMove(pieceMoved.source, pieceMoved.target) //Assertion valid because makeMove will throw an error otherwise.
-        chessboard.setMove(managerMove.move)
+        chessboard.setPosition(pathwayManager.getPosition())
         pathRenderer.onMoveAddition({move: managerMove.move, piece: pieceMoved.piece, nodeIdIndex: managerMove.id })
     }
     catch (e) {

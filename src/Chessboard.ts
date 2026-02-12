@@ -15,6 +15,9 @@ function Chessboard(boardElementId: string, onDrop: onDropEvent)  {
     function setMove(move: string){
         graphicalBoard.move(move);
     }
-    return {setMove, setPosition}
+    function getPosition(){
+        return graphicalBoard.position("fen");
+    }
+    return {setMove, setPosition, getPosition}
 }
 export {Chessboard}

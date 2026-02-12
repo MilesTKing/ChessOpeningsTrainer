@@ -19,7 +19,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     let nodeIdCounter= 0
     const nodeIdMap: Map<string, Node> = new Map()
     /**
-     * Validates and makes move, returning boolean that correlates to the validity of the move.
+     * Validates and makes move, throwing an invalid move error if invalid.
      */
     function makeMove (sourceSquare: string, targetSquare: string){
         const move = logicalBoard.move({from: sourceSquare, to: targetSquare})
@@ -45,12 +45,17 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         currentPosition.nextPositions.set(moveToAdd, newMoveNode);
         return newMoveNode
     }
+    function getPosition(){
+        return logicalBoard.fen({forceEnpassantSquare: true})
+    }
 
     function removePossibleMove(currentPosition: Node, moveToRemove: string){
         currentPosition.nextPositions.delete(moveToRemove);
     }
 
-
+    /**
+     * Resets logical chessboard to start position. Creates a node for the starting position
+     */
     function beginPathCreation(boardElementId: string = "chessboard", playercolor: playerColor = 'white'){
         logicalBoard.reset()
         currentPositionNode = createNode(logicalBoard.fen())
@@ -77,7 +82,13 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     function getActiveNodeId(){
         return getNodeId(currentPositionNode)
     }
-
-    return {beginPathCreation, makeMove, setActiveNode, getActiveNodeId}
+    console.log("testing chess.js get fen: ")
+    logicalBoard.move({from: "e2", to: "e4"})
+    logicalBoard.move({from: "e7", to: "e5"})
+    logicalBoard.move({from: "d2", to: "d4"})
+    console.log("logical board w/o override: "+ logicalBoard.fen())
+    console.log("logical board with override: "+ logicalBoard.fen({ forceEnpassantSquare : true}))
+    console.log("Test Done.")
+    return {beginPathCreation, makeMove, setActiveNode, getActiveNodeId, getPosition}
 }
 export {PathwayCustomizer}
