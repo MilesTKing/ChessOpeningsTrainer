@@ -1,4 +1,6 @@
 import cytoscape from "cytoscape";
+import dagre from "cytoscape-dagre"
+cytoscape.use(dagre)
 
 type nodeSelectionHandler = (nodeId: number) => void;
 
@@ -43,23 +45,26 @@ function moveListView(){
 
 
     })
+    function runTreeLayout() {
+        moveListGraph.layout({
+            name: 'dagre',
+            rankDir: 'TB',          // Top -> Bottom (children below parents)
+            rankSep: 60,            // vertical distance between layers
+            nodeSep: 40,            // horizontal distance between siblings
+            edgeSep: 10,
 
+        }).run()
+    }
     /**
      * Creates a graph node as a child of the current node.
      */
     function onMoveAddition(data: {move: string, piece: string, nodeIdIndex: number}) {
         const newNode= moveListGraph.add({data: {id: nodeIdIndex.toString(), move: data.move}});
         newNode.style('background-image', `${data.piece}.svg`)
-        if (nodeIdIndex === 0){
-            newNode.position('x', container.getBoundingClientRect().width / 2)
-            newNode.position('y', container.getBoundingClientRect().height / 20)
-        }
-
-        else{
-            newNode.position('x', moveListGraph.getElementById(activeNodeId).position().x)
-            newNode.position('y', moveListGraph.getElementById(activeNodeId).position().y + 50)
+        if (nodeIdIndex > 0){
             moveListGraph.add({data: {source: activeNodeId, target: newNode.id()}});
         }
+        runTreeLayout()
         activeNodeId = newNode.id();
         nodeIdIndex++
     }
