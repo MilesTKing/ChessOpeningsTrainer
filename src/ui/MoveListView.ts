@@ -48,6 +48,7 @@ function moveListView(){
     function runTreeLayout() {
         moveListGraph.layout({
             name: 'dagre',
+            // @ts-ignore
             rankDir: 'TB',          // Top -> Bottom (children below parents)
             rankSep: 60,            // vertical distance between layers
             nodeSep: 40,            // horizontal distance between siblings

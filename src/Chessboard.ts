@@ -1,3 +1,4 @@
+import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 import {onDropEvent} from "./types/ChessboardTypes";
 
 function Chessboard(boardElementId: string, onDrop: onDropEvent)  {

@@ -1,5 +1,4 @@
 import {Chess} from 'chess.js'
-import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 import {PathwayMoveRenderer} from "./types/PathwayTypes";
 
 interface Node {
@@ -14,7 +13,6 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
 
     let userColor: playerColor;
     const logicalBoard = new Chess()
-    let graphicalBoard: Chessboard2Instance
     let currentPositionNode: Node
     let nodeIdCounter= 0
     const nodeIdMap: Map<string, Node> = new Map()
@@ -56,7 +54,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     /**
      * Resets logical chessboard to start position. Creates a node for the starting position
      */
-    function beginPathCreation(boardElementId: string = "chessboard", playercolor: playerColor = 'white'){
+    function beginPathCreation(){
         logicalBoard.reset()
         currentPositionNode = createNode(logicalBoard.fen())
     }

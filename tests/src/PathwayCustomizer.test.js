@@ -12,9 +12,9 @@ describe("Chess Game Logic", () => {
     let board
     beforeEach(() => {
         document.body.innerHTML = `<div id="chessboard" style="width: 400px"></div>`
+        board = Chessboard("chessboard", ()=>{})
         const mockMoveListRenderer= {}
         pathCreator = PathwayCustomizer(mockMoveListRenderer)
-        board = Chessboard("chessboard", ()=>{})
         pathCreator.beginPathCreation()
     })
     test("Setting active Node by id.", () => {
