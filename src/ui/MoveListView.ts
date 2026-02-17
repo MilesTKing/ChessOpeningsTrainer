@@ -1,14 +1,20 @@
 import cytoscape from "cytoscape";
-import dagre from "cytoscape-dagre"
-cytoscape.use(dagre)
+import dagre from "cytoscape-dagre";
+cytoscape.use(dagre);
 
 type nodeSelectionHandler = (nodeId: number) => void;
 
-function moveListView(){
-    let activeNodeId: string
-    let nodeIdIndex= 0
-    let edgeIdIndex= -1
-    const container = document.getElementById("move-list-graph") as HTMLElement
+function MoveListView(opts?: { headless?: boolean }) {
+    let activeNodeId: string;
+    let nodeIdIndex = 0;
+
+    const headless = opts?.headless ?? false;
+
+    const container = headless ? undefined : document.getElementById("move-list-graph");
+    if (!headless && !container) {
+        throw new Error('MoveListView: #move-list-graph container not found');
+    }
+
     const moveListGraph = cytoscape({
 
         container: container, // container to render in
@@ -81,6 +87,14 @@ function moveListView(){
             eventResponse(e.target.data('id'))
         })
     }
-    return {onIllegalMove, onMoveAddition, onPositionChange, onNodeSelected};
+    function deleteSelectedNode(){
+        console.log(`Initial Length: ${moveListGraph.nodes().size()}`)
+        moveListGraph.$('selected').remove();
+        console.log(moveListGraph.nodes().size())
+    }
+    function selectGraphNode(graphNodeId: number){
+        moveListGraph.$('selected').select();
+    }
+    return {onIllegalMove, onMoveAddition, onPositionChange, onNodeSelected, selectGraphNode, deleteSelectedNode};
 }
-export {moveListView}
+export {MoveListView}

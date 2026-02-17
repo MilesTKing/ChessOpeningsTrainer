@@ -5,7 +5,7 @@ import {moveListView} from '../ui/MoveListView';
 import {Chessboard} from '../Chessboard'
 
 const chessboard= Chessboard('chessboard', onDrop)
-const pathRenderer= moveListView()
+const pathRenderer= MoveListView()
 const pathwayManager = PathwayCustomizer(pathRenderer)
 pathRenderer.onNodeSelected(nodeSelectionHandler)
 pathwayManager.beginPathCreation()

@@ -31,4 +31,5 @@ describe("Chess Game Logic", () => {
         pathCreator.makeMove("d2","d4")
         expect(pathCreator.getPosition()).toEqual("rnbqkbnr/pppp1ppp/8/4p3/3PP3/8/PPP2PPP/RNBQKBNR b KQkq d3 0 2")
     })
+
 })
