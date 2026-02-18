@@ -43,6 +43,10 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         currentPosition.nextPositions.set(moveToAdd, newMoveNode);
         return newMoveNode
     }
+
+    /**
+     *Gets logical board's position as a FEN. Shows en passant even if capture isn't possible
+     */
     function getPosition(){
         return logicalBoard.fen({forceEnpassantSquare: true})
     }

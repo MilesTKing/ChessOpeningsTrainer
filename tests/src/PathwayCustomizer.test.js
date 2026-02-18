@@ -25,7 +25,7 @@ describe("Chess Game Logic", () => {
         pathCreator.setActiveNode('2')
         expect(pathCreator.getActiveNodeId()).toEqual("2")
     })
-    test.skip("Setting active node sets chessboard position. Skipped because it's a chess.js bug", ()=>{
+    test("Setting active node sets chessboard position.", ()=>{
         pathCreator.makeMove("e2", "e4")
         pathCreator.makeMove("e7","e5")
         pathCreator.makeMove("d2","d4")
