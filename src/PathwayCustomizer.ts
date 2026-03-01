@@ -38,8 +38,11 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     function getNodeId(node: Node){
         return node.id.toString()
     }
+    function getNode(id: number){
+        return nodeIdMap.get(id.toString())
+    }
     function setActiveNode(nodeId: number){
-        const node = nodeIdMap.get(nodeId.toString())
+        const node = getNode(nodeId)
         if (node){
             currentPositionNode = node
             logicalBoard.load(currentPositionNode.fen)
@@ -59,7 +62,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         return newMoveNode
     }
     function deleteNode(parentNodeId: number, nodeId: number){
-        const parentNode = nodeIdMap.get(parentNodeId.toString())
+        const parentNode = getNode(parentNodeId)
         nodeIdMap.delete(nodeId.toString())
         if (!parentNode){
             return
@@ -67,6 +70,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         parentNode.nextPositions.forEach((value,key) => {
             if (getNodeId(value) === nodeId.toString()){
                 parentNode.nextPositions.delete(key)
+                
                 if(getActiveNodeId() === nodeId.toString()){
                     currentPositionNode = parentNode
                 }
