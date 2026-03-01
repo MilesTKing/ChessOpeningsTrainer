@@ -1,7 +1,7 @@
 import '../../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 import '../../node_modules/@chrisoakman/chessboard2/dist/chessboard2.css'
 import {PathwayCustomizer} from '../PathwayCustomizer'
-import {moveListView} from '../ui/MoveListView';
+import {MoveListView} from '../ui/MoveListView';
 import {Chessboard} from '../Chessboard'
 
 const chessboard= Chessboard('chessboard', onDrop)
@@ -26,5 +26,8 @@ function nodeSelectionHandler(nodeId: number){
     if (logicalBoardPosition){
         chessboard.setPosition(logicalBoardPosition)
     }
+}
+function nodeDeletionHandler(parentNodeId: number, nodeId: number){
+    pathwayManager.deleteNode(parentNodeId, nodeId)
 }
 

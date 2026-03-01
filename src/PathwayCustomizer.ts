@@ -3,6 +3,7 @@ import {PathwayMoveRenderer} from "./types/PathwayTypes";
 
 interface Node {
     fen: string;
+    id: number;
     nextPositions: Map<string, Node>;
 }
 
@@ -22,18 +23,32 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     function makeMove (sourceSquare: string, targetSquare: string){
         const move = logicalBoard.move({from: sourceSquare, to: targetSquare})
         currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
-        const id= nodeIdCounter
-        setNodeId(currentPositionNode)
-        return {move: move.san, id}
+        return {move: move.san, id: currentPositionNode.id}
         }
-
-
 
     function createNode(fen: string): Node{
         let nextPositions: Map<string, Node> = new Map();
-        return {fen, nextPositions}
+        const newNode = {fen, id: nodeIdCounter, nextPositions}
+        nodeIdMap.set(nodeIdCounter.toString(), newNode)
+        console.log(`node created, nodeId: ${nodeIdCounter.toString()}`)
+        nodeIdCounter++
+        return newNode
     }
 
+    function getNodeId(node: Node){
+        return node.id.toString()
+    }
+    function setActiveNode(nodeId: number){
+        const node = nodeIdMap.get(nodeId.toString())
+        if (node){
+            currentPositionNode = node
+            logicalBoard.load(currentPositionNode.fen)
+            return logicalBoard.fen()
+        }
+    }
+    function getActiveNodeId(){
+        return getNodeId(currentPositionNode)
+    }
     /**
      * Adds a node to the current position's next position's list.
      * @returns {Node} Returns the node that was added to passed in Node's next position list.
@@ -42,6 +57,21 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         const newMoveNode = createNode(fen)
         currentPosition.nextPositions.set(moveToAdd, newMoveNode);
         return newMoveNode
+    }
+    function deleteNode(parentNodeId: number, nodeId: number){
+        const parentNode = nodeIdMap.get(parentNodeId.toString())
+        nodeIdMap.delete(nodeId.toString())
+        if (!parentNode){
+            return
+        }
+        parentNode.nextPositions.forEach((value,key) => {
+            if (getNodeId(value) === nodeId.toString()){
+                parentNode.nextPositions.delete(key)
+                if(getActiveNodeId() === nodeId.toString()){
+                    currentPositionNode = parentNode
+                }
+            }
+        })
     }
 
     /**
@@ -62,35 +92,8 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         logicalBoard.reset()
         currentPositionNode = createNode(logicalBoard.fen())
     }
-    function setNodeId(node: Node){
-        nodeIdMap.set(nodeIdCounter.toString(), node)
-        nodeIdCounter++
-    }
-    function getNodeId(node: Node){
-        for(let [key,value] of nodeIdMap){
-            if (value === node){
-                return key
-            }
-        }
-    }
-    function setActiveNode(nodeId: number){
-        const node = nodeIdMap.get(nodeId.toString())
-        if (node){
-            currentPositionNode = node
-            logicalBoard.load(currentPositionNode.fen)
-            return logicalBoard.fen()
-        }
-    }
-    function getActiveNodeId(){
-        return getNodeId(currentPositionNode)
-    }
-    console.log("testing chess.js get fen: ")
-    logicalBoard.move({from: "e2", to: "e4"})
-    logicalBoard.move({from: "e7", to: "e5"})
-    logicalBoard.move({from: "d2", to: "d4"})
-    console.log("logical board w/o override: "+ logicalBoard.fen())
-    console.log("logical board with override: "+ logicalBoard.fen({ forceEnpassantSquare : true}))
-    console.log("Test Done.")
-    return {beginPathCreation, makeMove, setActiveNode, getActiveNodeId, getPosition}
+
+
+    return {beginPathCreation, makeMove, setActiveNode, getActiveNodeId, getPosition, deleteNode}
 }
 export {PathwayCustomizer}

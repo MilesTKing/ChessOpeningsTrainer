@@ -10,6 +10,7 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "@types/cytoscape-dagre": "^2.3.4",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
     "vitest": "^4.0.18"

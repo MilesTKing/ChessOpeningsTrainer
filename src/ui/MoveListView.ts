@@ -75,12 +75,7 @@ function MoveListView(opts?: { headless?: boolean }) {
         activeNodeId = newNode.id();
         nodeIdIndex++
     }
-    function onPositionChange() {
 
-    }
-    function onIllegalMove(){
-
-    }
     function onNodeSelected(eventResponse: nodeSelectionHandler) {
         moveListGraph.on("select", (e)=>{
             activeNodeId = e.target.data('id');
@@ -95,6 +90,6 @@ function MoveListView(opts?: { headless?: boolean }) {
     function selectGraphNode(graphNodeId: number){
         moveListGraph.$('selected').select();
     }
-    return {onIllegalMove, onMoveAddition, onPositionChange, onNodeSelected, selectGraphNode, deleteSelectedNode};
+    return {onMoveAddition, onNodeSelected, selectGraphNode, deleteSelectedNode};
 }
 export {MoveListView}
