@@ -6,7 +6,7 @@ type nodeSelectionHandler = (nodeId: number) => void;
 
 function MoveListView(opts?: { headless?: boolean }) {
     let activeNodeId: string;
-    let nodeIdIndex = 0;
+    let nodeIdIndex = 1;
 
     const headless = opts?.headless ?? false;
 
@@ -18,7 +18,6 @@ function MoveListView(opts?: { headless?: boolean }) {
     const moveListGraph = cytoscape({
 
         container: container, // container to render in
-
             style: [ // the stylesheet for the graph
                 {
                     selector: 'node',
@@ -68,7 +67,7 @@ function MoveListView(opts?: { headless?: boolean }) {
     function onMoveAddition(data: {move: string, piece: string, nodeIdIndex: number}) {
         const newNode= moveListGraph.add({data: {id: nodeIdIndex.toString(), move: data.move}});
         newNode.style('background-image', `${data.piece}.svg`)
-        if (nodeIdIndex > 0){
+        if (nodeIdIndex > 1){
             moveListGraph.add({data: {source: activeNodeId, target: newNode.id()}});
         }
         runTreeLayout()
