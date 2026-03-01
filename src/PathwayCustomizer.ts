@@ -30,13 +30,12 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         let nextPositions: Map<string, Node> = new Map();
         const newNode = {fen, id: nodeIdCounter, nextPositions}
         nodeIdMap.set(nodeIdCounter.toString(), newNode)
-        console.log(`node created, nodeId: ${nodeIdCounter.toString()}`)
         nodeIdCounter++
         return newNode
     }
 
     function getNodeId(node: Node){
-        return node.id.toString()
+        return node.id
     }
     function getNode(id: number){
         return nodeIdMap.get(id.toString())
@@ -61,21 +60,32 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         currentPosition.nextPositions.set(moveToAdd, newMoveNode);
         return newMoveNode
     }
-    function deleteNode(parentNodeId: number, nodeId: number){
+    function deleteNode(parentNodeId: number, nodeId: number) {
         const parentNode = getNode(parentNodeId)
-        nodeIdMap.delete(nodeId.toString())
-        if (!parentNode){
+        const node = getNode(nodeId)
+        if (!parentNode || !node) {
+            console.log(`returned early. parentNode: ${parentNode}. node: ${node}`)
             return
         }
-        parentNode.nextPositions.forEach((value,key) => {
-            if (getNodeId(value) === nodeId.toString()){
+        parentNode.nextPositions.forEach((value, key) => {
+            if (getNodeId(value) === nodeId) {
+                console.log(`node removed. Id: ${nodeId.toString()}`)
                 parentNode.nextPositions.delete(key)
-                
-                if(getActiveNodeId() === nodeId.toString()){
-                    currentPositionNode = parentNode
-                }
+
+                node.nextPositions.forEach((value, key) => {
+                    deleteNode(nodeId, getNodeId(value))
+                })
+
             }
         })
+        nodeIdMap.delete(nodeId.toString())
+        if (!getNode(currentPositionNode.id)) {
+            const node = getNode(parentNodeId)
+            if (node) {
+                currentPositionNode = node
+                console.log("nodes removed. CurrentPositionNode id: " + currentPositionNode.id.toString())
+            }
+        }
     }
 
     /**
