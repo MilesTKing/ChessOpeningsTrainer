@@ -43,3 +43,9 @@ body{
     flex: auto;
     max-height: 10rem;
 }
+.node_menu_items{
+    font-weight: bold;
+    color: red;
+    width: 100%;
+    height: 2rem;
+}

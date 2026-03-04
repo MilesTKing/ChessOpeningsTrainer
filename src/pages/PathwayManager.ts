@@ -8,6 +8,7 @@ const chessboard= Chessboard('chessboard', onDrop)
 const pathRenderer= MoveListView()
 const pathwayManager = PathwayCustomizer(pathRenderer)
 pathRenderer.onNodeSelected(nodeSelectionHandler)
+pathRenderer.onNodeDeleted(nodeDeletionHandler)
 pathwayManager.beginPathCreation()
 
 function onDrop (pieceMoved: ChessboardDropEvent) {
@@ -17,17 +18,18 @@ function onDrop (pieceMoved: ChessboardDropEvent) {
         pathRenderer.onMoveAddition({move: managerMove.move, piece: pieceMoved.piece, nodeIdIndex: managerMove.id })
     }
     catch (e) {
-        console.error(e)
-        return 'snapback'
+         return 'snapback'
     }
 }
 function nodeSelectionHandler(nodeId: number){
-    const logicalBoardPosition= pathwayManager.setActiveNode(nodeId)
+    pathwayManager.setActiveNode(nodeId)
+    const logicalBoardPosition = pathwayManager.getPosition()
     if (logicalBoardPosition){
         chessboard.setPosition(logicalBoardPosition)
     }
 }
 function nodeDeletionHandler(parentNodeId: number, nodeId: number){
     pathwayManager.deleteNode(parentNodeId, nodeId)
+    chessboard.setPosition(pathwayManager.getPosition())
 }
 

@@ -4,14 +4,14 @@ import contextMenus from 'cytoscape-context-menus';
 
 cytoscape.use(dagre);
 cytoscape.use(contextMenus);
-import 'cytoscape-context-menus/cytoscape-context-menus.css';
 
-type nodeSelectionHandler = (nodeId: number) => void;
+type NodeSelectionHandler = (nodeId: number) => void;
+type NodeDeletionHandler = (parentNodeId: number, nodeId: number) => void;
 
 function MoveListView(opts?: { headless?: boolean }) {
     let activeNodeId: string;
     let nodeIdIndex = 1;
-
+    let nodeDeletedResponse: NodeDeletionHandler
     const headless = opts?.headless ?? false;
 
     const container = headless ? undefined : document.getElementById("move-list-graph");
@@ -35,7 +35,6 @@ function MoveListView(opts?: { headless?: boolean }) {
                         'background-width': '1.2em',
                         'background-height': '1.2em',
                         'background-position-x': '0',
-                        'draggable': 'false',
                         // @ts-ignore
                         'text-margin-x': '.5em'
                     }
@@ -52,17 +51,13 @@ function MoveListView(opts?: { headless?: boolean }) {
                     }
                 },
             ],
-        autoungrabify: true
+        autoungrabify: false
 
     })
-    const context_menu_options = {
-        // Customize event to bring up the context menu
-        // Possible options https://js.cytoscape.org/#events/user-input-device-events
-        evtType: 'cxttap',
-        // List of initial menu items
-        // A menu item must have either onClickFunction or submenu or both
-        menuItems: [
 
+    const context_menu_options = {
+        evtType: 'cxttap',
+        menuItems: [
       {
         id: 'remove', // ID of menu item
         content: 'remove', // Display content of menu item
@@ -70,19 +65,35 @@ function MoveListView(opts?: { headless?: boolean }) {
         // Filters the elements to have this menu item on cxttap
         // If the selector is not truthy no elements will have this menu item on cxttap
         selector: 'node',
-        onClickFunction: function () { // The function to be executed on click
-          console.log('remove element');
+        onClickFunction: (e)=> {
+            try {
+                const node = e.target
+                const nodeId = node.data('id');
+                const nodeParentId = node.incomers('node')[0]
+                let children = node.successors();
+                for (const child of children) {
+                    console.log(`deleted child: ${child.data('id')}`)
+                    deleteNode(child.data('id'))
+                }
+                deleteNode(nodeId)
+                nodeDeletedResponse(nodeParentId, nodeId)
+
+
+                runTreeLayout()
+            }
+            catch (e) {
+            console.error(e)
+            }
         },
         disabled: false, // Whether the item will be created as disabled
         show: true, // Whether the item will be shown or not
         hasTrailingDivider: true, // Whether the item will have a trailing divider
         coreAsWell: false, // Whether core instance have this item on cxttap
-        submenu: [] // Shows the listed menuItems as a submenu for this item. An item must have either submenu or onClickFunction or both.
-      },
+       },
         ],
         // css classes that menu items will have
         menuItemClasses: [
-            // add class names to this list
+            'node_menu_items'
         ],
         // css classes that context menu will have
         contextMenuClasses: [
@@ -93,7 +104,7 @@ function MoveListView(opts?: { headless?: boolean }) {
     };
     const contextMenuInstance = moveListGraph.contextMenus(context_menu_options);
     moveListGraph.on('cxttap', (event: any) => {
-        console.log(contextMenuInstance.isActive())
+
     })
     function runTreeLayout() {
         moveListGraph.layout({
@@ -120,20 +131,22 @@ function MoveListView(opts?: { headless?: boolean }) {
         nodeIdIndex++
     }
 
-    function onNodeSelected(eventResponse: nodeSelectionHandler) {
+    function onNodeSelected(eventResponse: NodeSelectionHandler) {
         moveListGraph.on("select", (e)=>{
             activeNodeId = e.target.data('id');
             eventResponse(e.target.data('id'))
         })
     }
-    function deleteSelectedNode(){
-        console.log(`Initial Length: ${moveListGraph.nodes().size()}`)
-        moveListGraph.$('selected').remove();
-        console.log(moveListGraph.nodes().size())
+    function onNodeDeleted(eventResponse: NodeDeletionHandler) {
+        nodeDeletedResponse = eventResponse;
+    }
+
+    function deleteNode(targetId: string){
+        moveListGraph.remove(moveListGraph.getElementById(targetId));
     }
     function selectGraphNode(graphNodeId: number){
         moveListGraph.$('selected').select();
     }
-    return {onMoveAddition, onNodeSelected, selectGraphNode, deleteSelectedNode};
+    return {onMoveAddition, onNodeSelected, selectGraphNode, onNodeDeleted};
 }
 export {MoveListView}

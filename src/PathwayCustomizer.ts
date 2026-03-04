@@ -64,12 +64,10 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         const parentNode = getNode(parentNodeId)
         const node = getNode(nodeId)
         if (!parentNode || !node) {
-            console.log(`returned early. parentNode: ${parentNode}. node: ${node}`)
             return
         }
         parentNode.nextPositions.forEach((value, key) => {
             if (getNodeId(value) === nodeId) {
-                console.log(`node removed. Id: ${nodeId.toString()}`)
                 parentNode.nextPositions.delete(key)
 
                 node.nextPositions.forEach((value, key) => {
@@ -93,10 +91,6 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
      */
     function getPosition(){
         return logicalBoard.fen({forceEnpassantSquare: true})
-    }
-
-    function removePossibleMove(currentPosition: Node, moveToRemove: string){
-        currentPosition.nextPositions.delete(moveToRemove);
     }
 
     /**
