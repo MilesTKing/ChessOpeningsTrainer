@@ -67,22 +67,18 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
             return
         }
         parentNode.nextPositions.forEach((value, key) => {
-            if (getNodeId(value) === nodeId) {
+            if (getNodeId(value) === +nodeId) {
                 parentNode.nextPositions.delete(key)
 
                 node.nextPositions.forEach((value, key) => {
                     deleteNode(nodeId, getNodeId(value))
                 })
-
             }
         })
         nodeIdMap.delete(nodeId.toString())
         if (!getNode(currentPositionNode.id)) {
-            const node = getNode(parentNodeId)
-            if (node) {
-                currentPositionNode = node
-                console.log("nodes removed. CurrentPositionNode id: " + currentPositionNode.id.toString())
-            }
+            currentPositionNode = parentNode
+            logicalBoard.load(currentPositionNode.fen)
         }
     }
 

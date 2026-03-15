@@ -69,14 +69,17 @@ function MoveListView(opts?: { headless?: boolean }) {
             try {
                 const node = e.target
                 const nodeId = node.data('id');
-                const nodeParentId = node.incomers('node')[0]
+                const parentNodeId = node.incomers('node')[0].data('id')
                 let children = node.successors();
                 for (const child of children) {
-                    console.log(`deleted child: ${child.data('id')}`)
                     deleteNode(child.data('id'))
                 }
                 deleteNode(nodeId)
-                nodeDeletedResponse(nodeParentId, nodeId)
+                if (!moveListGraph.getElementById(activeNodeId).inside()) {
+                    setActiveNode(parentNodeId);
+                }
+
+                nodeDeletedResponse(parentNodeId, +nodeId)
 
 
                 runTreeLayout()
@@ -117,6 +120,9 @@ function MoveListView(opts?: { headless?: boolean }) {
 
         }).run()
     }
+    function setActiveNode(nodeId: number | string) {
+        activeNodeId = nodeId.toString();
+    }
     /**
      * Creates a graph node as a child of the current node.
      */
@@ -127,13 +133,13 @@ function MoveListView(opts?: { headless?: boolean }) {
             moveListGraph.add({data: {source: activeNodeId, target: newNode.id()}});
         }
         runTreeLayout()
-        activeNodeId = newNode.id();
+        setActiveNode(newNode.id())
         nodeIdIndex++
     }
 
     function onNodeSelected(eventResponse: NodeSelectionHandler) {
         moveListGraph.on("select", (e)=>{
-            activeNodeId = e.target.data('id');
+            setActiveNode(e.target.data('id'))
             eventResponse(e.target.data('id'))
         })
     }
@@ -142,7 +148,9 @@ function MoveListView(opts?: { headless?: boolean }) {
     }
 
     function deleteNode(targetId: string){
-        moveListGraph.remove(moveListGraph.getElementById(targetId));
+            moveListGraph.remove(moveListGraph.getElementById(targetId));
+
+
     }
     function selectGraphNode(graphNodeId: number){
         moveListGraph.$('selected').select();
