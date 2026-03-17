@@ -1,6 +1,3 @@
-body{
-    background-color: white;
-}
 #gameboard-container{
     display: flex;
     gap: .3rem;
@@ -18,28 +15,30 @@ body{
     max-width: 50%;
 }
 #sideboard-title{
-    background-color: purple;
+    background-color: #4e3122;
     flex: auto;
     height: 3rem;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
 }
 #sideboard-navbar{
-    background-color: green;
+    background-color: #4e3122;
     flex: auto;
     height: 4rem;
 }
 #move-list-graph{
     flex: auto;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    background-color: lightgray;
+    background-color: #593e2e;
     width: 100%;
 }
 #sideboard-controls{
-    background-color: pink;
+    background-color: #7e2a1c;
     flex: auto;
     max-height: 10rem;
 }
