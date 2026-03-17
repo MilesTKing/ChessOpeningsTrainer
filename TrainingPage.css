@@ -6,6 +6,13 @@
     flex: auto;
     max-width: 50%
 }
+#chessboard-options{
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    width: 3rem;
+    background-color: var(--dark-chess-brown);
+}
 #gameboard-sidebar{
     flex: auto;
     background-color: darkgray;
@@ -15,7 +22,7 @@
     max-width: 50%;
 }
 #sideboard-title{
-    background-color: #4e3122;
+    background-color: var(--dark-chess-brown);
     flex: auto;
     height: 3rem;
     font-size: 2rem;
@@ -23,7 +30,7 @@
     font-weight: bold;
 }
 #sideboard-navbar{
-    background-color: #4e3122;
+    background-color: var(--dark-chess-brown);
     flex: auto;
     height: 4rem;
 }
@@ -34,13 +41,14 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    background-color: #593e2e;
+    background-color: var(--light-chess-brown);
     width: 100%;
 }
 #sideboard-controls{
-    background-color: #7e2a1c;
+    background-color: var(--dark-chess-brown);
     flex: auto;
     max-height: 10rem;
+    height: 1rem
 }
 .node_menu_items{
     font-weight: bold;

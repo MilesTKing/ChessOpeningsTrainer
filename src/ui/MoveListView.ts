@@ -29,6 +29,7 @@ function MoveListView(opts?: { headless?: boolean }) {
                         'shape': 'roundrectangle',
                         'width': '4.2em',
                         'height': '2em',
+                        'background-color': '#b08968',
                         'label': 'data(move)',
                         'text-halign': "center",
                         'text-valign': 'center',
