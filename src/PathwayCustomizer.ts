@@ -6,7 +6,9 @@ interface Node {
     id: number;
     nextPositions: Map<string, Node>;
 }
+interface SerializedNode {
 
+}
 type playerColor = 'white' | 'black'
 
 function PathwayCustomizer(ui: PathwayMoveRenderer) {
@@ -106,6 +108,9 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         const rootNode = getNode(0)
         const json = JSON.stringify(rootNode)
         console.log(json)
+    }
+    function stringify_path(key: any, value: any){
+
     }
 
 
