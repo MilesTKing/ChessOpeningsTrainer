@@ -102,9 +102,14 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         logicalBoard.reset()
         currentPositionNode = createNode(logicalBoard.fen())
     }
+    function savePath(){
+        const rootNode = getNode(0)
+        const json = JSON.stringify(rootNode)
+        console.log(json)
+    }
 
 
-    return {beginPathCreation, makeMove, setActiveNode, getActiveNodeId, getPosition, deleteNode}
+    return {beginPathCreation, makeMove, setActiveNode, getActiveNodeId, getPosition, deleteNode, savePath}
 }
 
 export {PathwayCustomizer}
