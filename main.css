@@ -1,26 +1,31 @@
-:root{
+:root {
     --light-chess-brown: #593e2e;
     --dark-chess-brown: #4e3122;
 }
-body{
+
+body {
     background-color: #302e2b
 }
-#gameboard-container{
+
+#gameboard-container {
     display: flex;
     gap: .3rem;
 }
-#chessboard{
+
+#chessboard {
     flex: auto;
     max-width: 50%
 }
-#chessboard-options{
+
+#chessboard-options {
     flex: auto;
     display: flex;
     flex-direction: column;
     width: 3rem;
     background-color: var(--dark-chess-brown);
 }
-#gameboard-sidebar{
+
+#gameboard-sidebar {
     flex: auto;
     background-color: darkgray;
     border: 2px solid black;
@@ -28,7 +33,8 @@ body{
     flex-direction: column;
     max-width: 50%;
 }
-#sideboard-title{
+
+#sideboard-title {
     background-color: var(--dark-chess-brown);
     flex: auto;
     height: 3rem;
@@ -36,12 +42,14 @@ body{
     text-align: center;
     font-weight: bold;
 }
-#sideboard-navbar{
+
+#sideboard-navbar {
     background-color: var(--dark-chess-brown);
     flex: auto;
     height: 4rem;
 }
-#move-list-graph{
+
+#move-list-graph {
     flex: auto;
     display: flex;
     flex-direction: column;
@@ -51,18 +59,21 @@ body{
     background-color: var(--light-chess-brown);
     width: 100%;
 }
-#sideboard-controls{
+
+#sideboard-controls {
     background-color: var(--dark-chess-brown);
     flex: auto;
     max-height: 10rem;
     height: 1rem
 }
-.node_menu_items{
+
+.node_menu_items {
     font-weight: bold;
     color: red;
     width: 100%;
     height: 2rem;
 }
-.cursor_pointer{
+
+.cursor_pointer {
     cursor: pointer;
 }

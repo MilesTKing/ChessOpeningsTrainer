@@ -52,13 +52,16 @@ declare interface Chessboard2Instance {
     position(fen?: PositionObject | 'fen' | 'start', useAnimation?: boolean): string
 
     orientation(): 'white' | 'black'
+
     orientation(side: 'white' | 'black' | 'flip'): void
 
     /** Returns the current position as a FEN string. **/
     fen(): string
 
     flip(): void
+
     resize(): void
+
     move(move: string | string[]): void
 }
 

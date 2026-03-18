@@ -1,8 +1,8 @@
-import { beforeEach , describe, test , expect} from 'vitest'
+import {beforeEach, describe, test, expect} from 'vitest'
 import {TrainingSessionManager} from '../../src/TrainingSessionManager.ts'
-import { Window } from 'happy-dom';
+import {Window} from 'happy-dom';
 
-const window = new Window({ url: 'https://localhost:8080' });
+const window = new Window({url: 'https://localhost:8080'});
 const document = window.document;
 
 

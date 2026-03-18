@@ -1,9 +1,9 @@
-import { beforeEach , describe, test , expect} from 'vitest'
+import {beforeEach, describe, test, expect} from 'vitest'
 import {PathwayCustomizer} from '../../src/PathwayCustomizer.ts'
 import {Chessboard} from '../../src/Chessboard.ts'
-import { Window } from 'happy-dom';
+import {Window} from 'happy-dom';
 
-const window = new Window({ url: 'https://localhost:8080' });
+const window = new Window({url: 'https://localhost:8080'});
 const document = window.document;
 
 
@@ -12,48 +12,49 @@ describe("Chess Game Logic", () => {
     let board
     beforeEach(() => {
         document.body.innerHTML = `<div id="chessboard" style="width: 400px"></div>`
-        board = Chessboard("chessboard", ()=>{})
-        const mockMoveListRenderer= {}
+        board = Chessboard("chessboard", () => {
+        })
+        const mockMoveListRenderer = {}
         pathCreator = PathwayCustomizer(mockMoveListRenderer)
         pathCreator.beginPathCreation()
     })
     test("Setting active Node by id.", () => {
         pathCreator.makeMove("e2", "e4")
-        pathCreator.makeMove("e7","e5")
-        pathCreator.makeMove("d2","d4")
-        pathCreator.makeMove("d7","d5")
+        pathCreator.makeMove("e7", "e5")
+        pathCreator.makeMove("d2", "d4")
+        pathCreator.makeMove("d7", "d5")
         pathCreator.setActiveNode('2')
         expect(pathCreator.getActiveNodeId()).toEqual(2)
     })
-    test("Setting active node sets chessboard position.", ()=>{
+    test("Setting active node sets chessboard position.", () => {
         pathCreator.makeMove("e2", "e4")
-        pathCreator.makeMove("e7","e5")
-        pathCreator.makeMove("d2","d4")
+        pathCreator.makeMove("e7", "e5")
+        pathCreator.makeMove("d2", "d4")
         expect(pathCreator.getPosition()).toEqual("rnbqkbnr/pppp1ppp/8/4p3/3PP3/8/PPP2PPP/RNBQKBNR b KQkq d3 0 2")
     })
     test("Get active node by id.", () => {
         pathCreator.makeMove("e2", "e4")
-        pathCreator.makeMove("e7","e5")
-        pathCreator.makeMove("d2","d4")
-        pathCreator.makeMove("d7","d5")
+        pathCreator.makeMove("e7", "e5")
+        pathCreator.makeMove("d2", "d4")
+        pathCreator.makeMove("d7", "d5")
         expect(pathCreator.getActiveNodeId()).toEqual(4)
     })
     test("Deleting node by id.", () => {
         pathCreator.makeMove("e2", "e4")
-        pathCreator.makeMove("e7","e5")
-        pathCreator.makeMove("d2","d4")
-        pathCreator.makeMove("d7","d5")
+        pathCreator.makeMove("e7", "e5")
+        pathCreator.makeMove("d2", "d4")
+        pathCreator.makeMove("d7", "d5")
         expect(pathCreator.getActiveNodeId()).toEqual(4)
-        pathCreator.deleteNode(3,4)
+        pathCreator.deleteNode(3, 4)
         expect(pathCreator.getActiveNodeId()).toEqual(3)
     })
     test("Deleting node deletes all children.", () => {
         pathCreator.makeMove("e2", "e4")
-        pathCreator.makeMove("e7","e5")
-        pathCreator.makeMove("d2","d4")
-        pathCreator.makeMove("d7","d5")
+        pathCreator.makeMove("e7", "e5")
+        pathCreator.makeMove("d2", "d4")
+        pathCreator.makeMove("d7", "d5")
         expect(pathCreator.getActiveNodeId()).toEqual(4)
-        pathCreator.deleteNode(0,1)
+        pathCreator.deleteNode(0, 1)
         expect(pathCreator.getActiveNodeId()).toEqual(0)
     })
 
