@@ -25,7 +25,7 @@
 
     "skipLibCheck": true,
 
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": []
   },
   "include": ["src/**/*"],
