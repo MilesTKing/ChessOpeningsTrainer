@@ -5,3 +5,64 @@
 body{
     background-color: #302e2b
 }
+#gameboard-container{
+    display: flex;
+    gap: .3rem;
+}
+#chessboard{
+    flex: auto;
+    max-width: 50%
+}
+#chessboard-options{
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    width: 3rem;
+    background-color: var(--dark-chess-brown);
+}
+#gameboard-sidebar{
+    flex: auto;
+    background-color: darkgray;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+}
+#sideboard-title{
+    background-color: var(--dark-chess-brown);
+    flex: auto;
+    height: 3rem;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+}
+#sideboard-navbar{
+    background-color: var(--dark-chess-brown);
+    flex: auto;
+    height: 4rem;
+}
+#move-list-graph{
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--light-chess-brown);
+    width: 100%;
+}
+#sideboard-controls{
+    background-color: var(--dark-chess-brown);
+    flex: auto;
+    max-height: 10rem;
+    height: 1rem
+}
+.node_menu_items{
+    font-weight: bold;
+    color: red;
+    width: 100%;
+    height: 2rem;
+}
+.cursor_pointer{
+    cursor: pointer;
+}

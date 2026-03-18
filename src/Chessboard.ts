@@ -8,17 +8,20 @@ function Chessboard(boardElementId: string, onDrop: onDropEvent)  {
         onDrop,
         showErrors: 'console'
     }
-    const graphicalBoard = Chessboard2(boardElementId, config);
+    const chessboard = Chessboard2(boardElementId, config);
 
     function setPosition(position: string){
-        graphicalBoard.position(position)
+        chessboard.position(position)
     }
     function setMove(move: string){
-        graphicalBoard.move(move);
+        chessboard.move(move);
     }
     function getPosition(){
-        return graphicalBoard.position("fen");
+        return chessboard.position("fen");
     }
-    return {setMove, setPosition, getPosition}
+    function flipBoard(){
+        chessboard.flip();
+    }
+    return {setMove, setPosition, getPosition, flipBoard}
 }
 export {Chessboard}

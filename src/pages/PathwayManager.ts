@@ -11,6 +11,12 @@ pathRenderer.onNodeSelected(nodeSelectionHandler)
 pathRenderer.onNodeDeleted(nodeDeletionHandler)
 pathwayManager.beginPathCreation()
 
+const flip_board_icon = document.getElementById("flip-board-icon")
+if (flip_board_icon) {
+    flip_board_icon.addEventListener("click", () => {
+        chessboard.flipBoard()
+    })
+}
 function onDrop (pieceMoved: ChessboardDropEvent) {
     try {
         const managerMove= pathwayManager.makeMove(pieceMoved.source, pieceMoved.target) //Assertion valid because makeMove will throw an error otherwise.
