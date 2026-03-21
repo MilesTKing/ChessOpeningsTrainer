@@ -41,9 +41,10 @@ function nodeDeletionHandler(parentNodeId: number, nodeId: number) {
     chessboard.setPosition(pathwayManager.getPosition())
 }
 
-const logButton = document.getElementById("log-json")
-if(logButton) {
-    logButton.addEventListener("click", () => {
-        pathwayManager.savePath()
+const saveButton = document.getElementById("log-json")
+if(saveButton) {
+    saveButton.addEventListener("click", () => {
+        localStorage.setItem("savedPath", pathwayManager.savePath())
+        console.log("savedPath: ", JSON.parse(localStorage.getItem("savedPath")))
     })
 }
