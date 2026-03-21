@@ -11,6 +11,10 @@ interface SerializedNode {
     id: number;
     nextPositions: {move: string, id: number}[]
 }
+interface SerializedNodeMove{
+    id: number;
+    move: string;
+}
 type playerColor = 'white' | 'black'
 
 function PathwayCustomizer(ui: PathwayMoveRenderer) {
@@ -107,15 +111,15 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         currentPositionNode = createNode(logicalBoard.fen())
     }
     function flattenPath(rootNode = getNode(0) as Node, savedNodeList: SerializedNode[] = []){
-        const nextMoveList = []
+        const nextMoveList: SerializedNodeMove[] = []
+        const node = {fen: rootNode.fen, id: rootNode.id, nextPositions: nextMoveList}
+        savedNodeList.push(node)
         for (const nextPosition of rootNode.nextPositions){
             const move = nextPosition[0]
             const id = nextPosition[1].id
             nextMoveList.push({move,id})
             flattenPath(nextPosition[1], savedNodeList)
         }
-        const node = {fen: rootNode.fen, id: rootNode.id, nextPositions: nextMoveList}
-        savedNodeList.push(node)
         return savedNodeList
     }
     function savePath(){
