@@ -1,8 +1,8 @@
 import {Chess} from 'chess.js'
-
 function TrainingSessionManager() {
-    function loadPath(){
-
+    const chessBoard =
+    function startTraining(boardElementId: string){
+        const chessboard = new Chess()
     }
 }
 

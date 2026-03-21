@@ -106,7 +106,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     /**
      * Resets logical chessboard to start position. Creates a node for the starting position
      */
-    function beginPathCreation() {
+    function startPathCreation() {
         logicalBoard.reset()
         currentPositionNode = createNode(logicalBoard.fen())
     }
@@ -130,7 +130,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     }
 
 
-    return {beginPathCreation, makeMove, setActiveNode, getActiveNodeId, getPosition, deleteNode, savePath}
+    return {startPathCreation, makeMove, setActiveNode, getActiveNodeId, getPosition, deleteNode, savePath}
 }
 
 export {PathwayCustomizer}

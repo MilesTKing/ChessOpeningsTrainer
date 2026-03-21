@@ -1,7 +1,7 @@
 import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
 import {onDropEvent} from "./types/ChessboardTypes";
 
-function Chessboard(boardElementId: string, onDrop: onDropEvent) {
+function ChessBoard(boardElementId: string, onDrop: onDropEvent) {
     const config: Chessboard2Config = {
         position: 'start',
         draggable: true,
@@ -29,4 +29,4 @@ function Chessboard(boardElementId: string, onDrop: onDropEvent) {
     return {setMove, setPosition, getPosition, flipBoard}
 }
 
-export {Chessboard}
+export {ChessBoard}

@@ -1,6 +1,6 @@
 import {beforeEach, describe, test, expect} from 'vitest'
 import {PathwayCustomizer} from '../../src/PathwayCustomizer.ts'
-import {Chessboard} from '../../src/Chessboard.ts'
+import {ChessBoard} from '../../src/ChessBoard.ts'
 import {Window} from 'happy-dom';
 
 const window = new Window({url: 'https://localhost:8080'});
@@ -12,11 +12,11 @@ describe("Chess Game Logic", () => {
     let board
     beforeEach(() => {
         document.body.innerHTML = `<div id="chessboard" style="width: 400px"></div>`
-        board = Chessboard("chessboard", () => {
+        board = ChessBoard("chessboard", () => {
         })
         const mockMoveListRenderer = {}
         pathCreator = PathwayCustomizer(mockMoveListRenderer)
-        pathCreator.beginPathCreation()
+        pathCreator.startPathCreation()
     })
     test("Setting active Node by id.", () => {
         pathCreator.makeMove("e2", "e4")
