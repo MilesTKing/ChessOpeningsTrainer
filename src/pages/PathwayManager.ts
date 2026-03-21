@@ -42,6 +42,8 @@ function nodeDeletionHandler(parentNodeId: number, nodeId: number) {
 }
 
 const logButton = document.getElementById("log-json")
-logButton.addEventListener("click", () => {
-    pathwayManager.savePath()
-})
+if(logButton) {
+    logButton.addEventListener("click", () => {
+        pathwayManager.savePath()
+    })
+}

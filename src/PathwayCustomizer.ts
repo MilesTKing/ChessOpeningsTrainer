@@ -7,7 +7,9 @@ interface Node {
     nextPositions: Map<string, Node>;
 }
 interface SerializedNode {
-
+    fen: string;
+    id: number;
+    nextPositions: {move: string, id: number}[]
 }
 type playerColor = 'white' | 'black'
 
@@ -104,13 +106,23 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         logicalBoard.reset()
         currentPositionNode = createNode(logicalBoard.fen())
     }
-    function savePath(){
-        const rootNode = getNode(0)
-        const json = JSON.stringify(rootNode)
-        console.log(json)
+    function flattenPath(rootNode = getNode(0) as Node, savedNodeList: SerializedNode[] = []){
+        const nextMoveList = []
+        for (const nextPosition of rootNode.nextPositions){
+            const move = nextPosition[0]
+            const id = nextPosition[1].id
+            nextMoveList.push({move,id})
+            flattenPath(nextPosition[1], savedNodeList)
+        }
+        const node = {fen: rootNode.fen, id: rootNode.id, nextPositions: nextMoveList}
+        savedNodeList.push(node)
+        return savedNodeList
     }
-    function stringify_path(key: any, value: any){
-
+    function savePath(){
+        const nodeList = flattenPath(getNode(0))
+        const json = JSON.stringify(nodeList)
+        console.log(json)
+        return json
     }
 
 
