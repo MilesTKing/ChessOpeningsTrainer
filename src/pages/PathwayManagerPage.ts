@@ -45,6 +45,5 @@ const saveButton = document.getElementById("log-json")
 if(saveButton) {
     saveButton.addEventListener("click", () => {
         localStorage.setItem("savedPath", pathwayManagerPage.savePath())
-        console.log("savedPath: ", JSON.parse(localStorage.getItem("savedPath")))
     })
 }

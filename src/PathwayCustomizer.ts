@@ -1,20 +1,6 @@
 import {Chess} from 'chess.js'
 import {PathwayMoveRenderer} from "./types/PathwayTypes";
 
-interface Node {
-    fen: string;
-    id: number;
-    nextPositions: Map<string, Node>;
-}
-interface SerializedNode {
-    fen: string;
-    id: number;
-    nextPositions: {move: string, id: number}[]
-}
-interface SerializedNodeMove{
-    id: number;
-    move: string;
-}
 type playerColor = 'white' | 'black'
 
 function PathwayCustomizer(ui: PathwayMoveRenderer) {
@@ -22,9 +8,9 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
 
     let userColor: playerColor;
     const logicalBoard = new Chess()
-    let currentPositionNode: Node
+    let currentPositionNode: PathNode
     let nodeIdCounter = 0
-    const nodeIdMap: Map<string, Node> = new Map()
+    const nodeIdMap: Map<string, PathNode> = new Map()
 
     /**
      * Validates and makes move, throwing an invalid move error if invalid.
@@ -35,15 +21,15 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         return {move: move.san, id: currentPositionNode.id}
     }
 
-    function createNode(fen: string): Node {
-        let nextPositions: Map<string, Node> = new Map();
+    function createNode(fen: string): PathNode {
+        let nextPositions: Map<string, PathNode> = new Map();
         const newNode = {fen, id: nodeIdCounter, nextPositions}
         nodeIdMap.set(nodeIdCounter.toString(), newNode)
         nodeIdCounter++
         return newNode
     }
 
-    function getNodeId(node: Node) {
+    function getNodeId(node: PathNode) {
         return node.id
     }
 
@@ -66,9 +52,9 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
 
     /**
      * Adds a node to the current position's next position's list.
-     * @returns {Node} Returns the node that was added to passed in Node's next position list.
+     * @returns {PathNode} Returns the node that was added to passed in PathNode's next position list.
      */
-    function addPossibleMove(currentPosition: Node, fen: string, moveToAdd: string): Node {
+    function addPossibleMove(currentPosition: PathNode, fen: string, moveToAdd: string): PathNode {
         const newMoveNode = createNode(fen)
         currentPosition.nextPositions.set(moveToAdd, newMoveNode);
         return newMoveNode
@@ -110,8 +96,8 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         logicalBoard.reset()
         currentPositionNode = createNode(logicalBoard.fen())
     }
-    function flattenPath(rootNode = getNode(0) as Node, savedNodeList: SerializedNode[] = []){
-        const nextMoveList: SerializedNodeMove[] = []
+    function flattenPath(rootNode = getNode(0) as PathNode, savedNodeList: SerializedPathNode[] = []){
+        const nextMoveList: SerializedPathNodeMove[] = []
         const node = {fen: rootNode.fen, id: rootNode.id, nextPositions: nextMoveList}
         savedNodeList.push(node)
         for (const nextPosition of rootNode.nextPositions){
