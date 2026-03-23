@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="main.css">
+  <script type="module" defer src="./src/pages/TrainingPage.ts"></script>
+</head>
+<body>
+<a href="index.html" >PathCreationPage</a>
+<div id="gameboard-container">
+    <div id="chessboard-options">
+        <img id="flip-board-icon" class="cursor_pointer" src="src/assets/flip-board.svg" alt="flip-board icon">
+    </div>
+    <div id="chessboard" style="width: 50%"></div>
+    <div id="gameboard-sidebar">
+        <div id="sideboard-title"> Opening Analysis</div>
+        <div id="sideboard-navbar"></div>
+        <div id="move-list-graph"></div>
+        <div id="sideboard-controls"></div>
+
+    </div>
+</div>
+<button id = "log-json" style="width: 100px; height: 100px" ></button>
+</body>
+</html>

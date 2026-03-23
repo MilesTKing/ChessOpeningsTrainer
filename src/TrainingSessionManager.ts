@@ -5,8 +5,11 @@ function TrainingSessionManager() {
     let activeNode
     let trainingPath
 
-    function startTraining(boardElementId: string){
+    function startTraining(selectedTrainingPath: SerializedPathNode[]){
         chessBoard.reset()
+        trainingPath = selectedTrainingPath
+        console.log(selectedTrainingPath)
     }
+    return {startTraining}
 }
 export{ TrainingSessionManager }
