@@ -5,8 +5,8 @@ import {MoveListView} from '../ui/MoveListView';
 
 const chessboard = ChessBoard('chessboard', onDrop)
 const trainingManager = TrainingManager()
-
-trainingManager.startTraining(JSON.parse(localStorage.getItem("savedPath")))
+let trainingPath: PathMessage = JSON.parse(localStorage.getItem("savedPath"))
+trainingManager.startTraining(trainingPath)
 function onDrop(pieceMoved: ChessboardDropEvent) {
     return 'snapback'
 }

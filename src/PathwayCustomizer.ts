@@ -110,7 +110,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     }
     function savePath(pathName: string){
         const nodeList = flattenPath(getNode(0))
-        const nodePath = {"name": pathName, "path": nodeList}
+        const nodePath: PathMessage = {"name": pathName, "positions": nodeList}
         const json = JSON.stringify(nodePath)
         console.log(json)
         return json
