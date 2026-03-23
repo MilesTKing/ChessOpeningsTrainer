@@ -43,6 +43,7 @@ function nodeDeletionHandler(parentNodeId: number, nodeId: number) {
 const saveButton = document.getElementById("log-json")
 if(saveButton) {
     saveButton.addEventListener("click", () => {
-        localStorage.setItem("savedPath", pathwayManagerPage.savePath())
+        const pathName = prompt("Pathway name?")
+        localStorage.setItem("savedPath", pathwayManagerPage.savePath(pathName))
     })
 }

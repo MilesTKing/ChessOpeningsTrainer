@@ -6,7 +6,7 @@ interface PathNode {
 interface SerializedPathNode {
     fen: string;
     id: number;
-    nextPositions: {move: string, id: number}[]
+    nextPositions: SerializedPathNodeMove[]
 }
 interface SerializedPathNodeMove{
     id: number;

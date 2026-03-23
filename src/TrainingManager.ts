@@ -1,5 +1,6 @@
 import {Chess} from 'chess.js'
-function TrainingSessionManager() {
+import {MoveListView} from 'ui/MoveListView'
+function TrainingManager() {
     const chessBoard = new Chess()
     let accuracy = 0
     let activeNode
@@ -10,6 +11,10 @@ function TrainingSessionManager() {
         trainingPath = selectedTrainingPath
         console.log(selectedTrainingPath)
     }
-    return {startTraining}
+    function getPosition(){
+        return chessBoard.fen({forceEnpassantSquare: true})
+    }
+
+    return {startTraining, getPosition}
 }
-export{ TrainingSessionManager }
+export{ TrainingManager }
