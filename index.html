@@ -10,9 +10,15 @@
 <a href="TrainingPage.html" >TrainingPage</a>
 <div id="gameboard-container">
     <div id="chessboard-options">
-        <img id="flip-board-icon" class="cursor_pointer" src="src/assets/flip-board.svg" alt="flip-board icon">
+        <button class="cursor_pointer">
+            <img class="board_option" src="src/assets/flip-board.svg" alt="flip board icon">
+        </button>
+        <button id= "save-button" class="cursor_pointer">
+            <img class="board_option" src="src/assets/save.svg" alt="save button icon">
+        </button>
+
     </div>
-    <div id="chessboard" style="width: 50%"></div>
+    <div id="chessboard"></div>
     <div id="gameboard-sidebar">
         <div id="sideboard-title"> Opening Analysis</div>
         <div id="sideboard-navbar"></div>
@@ -21,6 +27,5 @@
 
     </div>
 </div>
-<button id = "log-json" style="width: 100px; height: 100px" ></button>
 </body>
 </html>

@@ -40,7 +40,7 @@ function nodeDeletionHandler(parentNodeId: number, nodeId: number) {
     chessboard.setPosition(pathwayManagerPage.getPosition())
 }
 
-const saveButton = document.getElementById("log-json")
+const saveButton = document.getElementById("save-button")
 if(saveButton) {
     saveButton.addEventListener("click", () => {
         const pathName = prompt("Pathway name?")

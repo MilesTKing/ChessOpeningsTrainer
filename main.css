@@ -14,6 +14,7 @@ body {
 
 #chessboard {
     flex: auto;
+    width: 50%;
     max-width: 50%
 }
 
@@ -22,9 +23,20 @@ body {
     display: flex;
     flex-direction: column;
     width: 3rem;
+    max-width: 3%;
+    min-width: 2%;
     background-color: var(--dark-chess-brown);
+    button{
+        background-color: var(--dark-chess-brown);
+        border: none;
+    }
 }
-
+.board_option{
+    flex: auto;
+    background-color: var(--dark-chess-brown);
+    border: none;
+    width: 100%;
+}
 #gameboard-sidebar {
     flex: auto;
     background-color: darkgray;

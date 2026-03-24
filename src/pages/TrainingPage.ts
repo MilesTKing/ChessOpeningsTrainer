@@ -7,6 +7,7 @@ const chessboard = ChessBoard('chessboard', onDrop)
 const trainingManager = TrainingManager()
 let trainingPath: PathMessage = JSON.parse(localStorage.getItem("savedPath"))
 trainingManager.startTraining(trainingPath)
+trainingManager.setRandomPuzzle()
 function onDrop(pieceMoved: ChessboardDropEvent) {
     return 'snapback'
 }
