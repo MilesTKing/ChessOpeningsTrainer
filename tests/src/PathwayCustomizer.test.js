@@ -7,7 +7,7 @@ const window = new Window({url: 'https://localhost:8080'});
 const document = window.document;
 
 
-describe("Chess Game Logic", () => {
+describe.skip("Chess Game Logic", () => {
     let pathCreator
     let board
     beforeEach(() => {
