@@ -5,10 +5,10 @@ import {ChessBoard} from '../ChessBoard'
 
 const chessboard = ChessBoard('chessboard', onDrop)
 const pathRenderer = MoveListView()
-const pathwayManagerPage = PathwayCustomizer(pathRenderer)
+const pathManager = PathwayCustomizer(pathRenderer)
 pathRenderer.onNodeSelected(nodeSelectionHandler)
 pathRenderer.onNodeDeleted(nodeDeletionHandler)
-pathwayManagerPage.startPathCreation()
+pathManager.startPathCreation()
 
 const flip_board_icon = document.getElementById("flip-board-icon")
 if (flip_board_icon) {
@@ -19,8 +19,8 @@ if (flip_board_icon) {
 
 function onDrop(pieceMoved: ChessboardDropEvent) {
     try {
-        const managerMove = pathwayManagerPage.makeMove(pieceMoved.source, pieceMoved.target) //Assertion valid because makeMove will throw an error otherwise.
-        chessboard.setPosition(pathwayManagerPage.getPosition())
+        const managerMove = pathManager.makeMove(pieceMoved.source, pieceMoved.target) //Assertion valid because makeMove will throw an error otherwise.
+        chessboard.setPosition(pathManager.getPosition())
         pathRenderer.onMoveAddition({move: managerMove.move, piece: pieceMoved.piece, nodeIdIndex: managerMove.id})
     } catch (e) {
         return 'snapback'
@@ -28,22 +28,26 @@ function onDrop(pieceMoved: ChessboardDropEvent) {
 }
 
 function nodeSelectionHandler(nodeId: number) {
-    pathwayManagerPage.setActiveNode(nodeId)
-    const logicalBoardPosition = pathwayManagerPage.getPosition()
+    pathManager.setActiveNode(nodeId)
+    const logicalBoardPosition = pathManager.getPosition()
     if (logicalBoardPosition) {
         chessboard.setPosition(logicalBoardPosition)
     }
 }
 
 function nodeDeletionHandler(parentNodeId: number, nodeId: number) {
-    pathwayManagerPage.deleteNode(parentNodeId, nodeId)
-    chessboard.setPosition(pathwayManagerPage.getPosition())
+    pathManager.deleteNode(parentNodeId, nodeId)
+    chessboard.setPosition(pathManager.getPosition())
 }
 
-const saveButton = document.getElementById("save-button")
-if(saveButton) {
-    saveButton.addEventListener("click", () => {
-        const pathName = prompt("Pathway name?")
-        localStorage.setItem("savedPath", pathwayManagerPage.savePath(pathName))
-    })
-}
+const saveButton = document.getElementById("save-button") as HTMLButtonElement
+saveButton.addEventListener("click", () => {
+    const pathName = prompt("Pathway name?")
+    if (!pathName) {
+        throw new Error(`Invalid path name`)
+    }
+    pathManager.savePath(pathName)
+    console.log(localStorage.getItem("pathList"))
+
+})
+

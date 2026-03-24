@@ -111,9 +111,22 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
     function savePath(pathName: string){
         const nodeList = flattenPath(getNode(0))
         const nodePath: PathMessage = {"name": pathName, "positions": nodeList}
-        const json = JSON.stringify(nodePath)
-        console.log(json)
-        return json
+        if (!localStorage.getItem("pathList")){
+            localStorage.setItem("pathList", JSON.stringify([]))
+        }
+        const pathList: PathMessage[] = JSON.parse(localStorage.getItem("pathList") as string)
+        let index = 0
+        pathList.forEach(path=>{
+            if(path.name === pathName){
+                pathList[index] = nodePath
+                localStorage.setItem("pathList", JSON.stringify(pathList))
+                return
+            }
+            index++
+        })
+        pathList.push(nodePath)
+        localStorage.setItem("pathList", JSON.stringify(pathList))
+        return
     }
 
 
