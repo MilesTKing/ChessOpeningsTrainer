@@ -12,7 +12,6 @@ function TrainingManager() {
         pathList.forEach(path=>{
             if(path.name === selectedtrainingPositions){
                 trainingPositions = path.positions
-                console.log(trainingPositions)
             }
         })
         for (const node of trainingPositions){
