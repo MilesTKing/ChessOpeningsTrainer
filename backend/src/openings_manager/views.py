@@ -4,9 +4,17 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import Openings
 from django.views.decorators.http import require_http_methods, require_POST, require_GET
 import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+@ensure_csrf_cookie
+def csrf(request):
+    return JsonResponse({"message": "CSRF cookie set"})
 
 @require_POST
 def register(request):
@@ -42,7 +50,6 @@ def login_view(request):
 def logout(request):
     logout(request)
     return HttpResponse(status=204)
-
 @require_http_methods(["GET", "POST"])
 def openings(request, opening_name = None):
     if not request.user.is_authenticated:
