@@ -32,3 +32,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Django tutorial dirs
+backend/src/polls/
