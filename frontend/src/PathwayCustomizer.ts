@@ -1,11 +1,10 @@
 import {Chess} from 'chess.js'
-import {PathwayMoveRenderer} from "./types/PathwayTypes";
-
+import {getCookie} from "./utils/cookies"
 type playerColor = 'white' | 'black'
 
-function PathwayCustomizer(ui: PathwayMoveRenderer) {
+function PathwayCustomizer() {
 
-
+    const API_URL = import.meta.env.VITE_OPENINGS_API_URL;
     let userColor: playerColor;
     const logicalBoard = new Chess()
     let currentPositionNode: PathNode
@@ -70,7 +69,7 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
             if (getNodeId(value) === +nodeId) {
                 parentNode.nextPositions.delete(key)
 
-                node.nextPositions.forEach((value, key) => {
+                node.nextPositions.forEach((value) => {
                     deleteNode(nodeId, getNodeId(value))
                 })
             }
@@ -108,25 +107,56 @@ function PathwayCustomizer(ui: PathwayMoveRenderer) {
         }
         return savedNodeList
     }
-    function savePath(pathName: string){
+    async function savePath(pathName: string, saveMethod: string = 'api'){
+        await fetch(`${API_URL}/api/csrf/`, {
+            credentials: "include"
+        });
+        const csrftoken = getCookie('csrftoken');
+        console.log(csrftoken)
         const nodeList = flattenPath(getNode(0))
         const nodePath: PathMessage = {"name": pathName, "positions": nodeList}
-        if (!localStorage.getItem("pathList")){
-            localStorage.setItem("pathList", JSON.stringify([]))
-        }
-        const pathList: PathMessage[] = JSON.parse(localStorage.getItem("pathList") as string)
-        let index = 0
-        pathList.forEach(path=>{
-            if(path.name === pathName){
-                pathList[index] = nodePath
-                localStorage.setItem("pathList", JSON.stringify(pathList))
+        if (saveMethod === 'api'){
+            const openings_api_url = `${API_URL}/api/openings/`
+            const pathMessage = JSON.stringify(nodePath)
+            const response = await fetch(openings_api_url, {
+                method: "POST",
+                body: pathMessage,
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken || "",
+                },
+                credentials: "include"
+            });
+            if (!response.ok){
+                console.log("Api upload failed.")
+            }
+            const json = await response.json()
+            if (!json){
+                console.log("Json response error.")
                 return
             }
-            index++
-        })
-        pathList.push(nodePath)
-        localStorage.setItem("pathList", JSON.stringify(pathList))
-        return
+            console.log(json)
+            return
+        }
+        else if (saveMethod === 'localStorage'){
+            if (!localStorage.getItem("pathList")){
+                localStorage.setItem("pathList", JSON.stringify([]))
+            }
+            const pathList: PathMessage[] = JSON.parse(localStorage.getItem("pathList") as string)
+            let index = 0
+            pathList.forEach(path=>{
+                if(path.name === pathName){
+                    pathList[index] = nodePath
+                    localStorage.setItem("pathList", JSON.stringify(pathList))
+                    return
+                }
+                index++
+            })
+            pathList.push(nodePath)
+            localStorage.setItem("pathList", JSON.stringify(pathList))
+            return
+        }
+
     }
 
 

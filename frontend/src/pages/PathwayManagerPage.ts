@@ -46,8 +46,6 @@ saveButton.addEventListener("click", () => {
     if (!pathName) {
         throw new Error(`Invalid path name`)
     }
-    pathManager.savePath(pathName)
-    console.log(localStorage.getItem("pathList"))
-
+    pathManager.savePath(pathName, 'api')
 })
 
