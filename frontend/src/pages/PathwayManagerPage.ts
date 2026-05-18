@@ -60,7 +60,7 @@ async function sendData() {
     const formData = new FormData(register_form);
     const csrftoken = getCookie('csrftoken');
     try {
-        const response = await fetch(API_URL + REGISTER_URL, {
+        await fetch(API_URL + REGISTER_URL, {
             method: "POST",
             body: formData,
             headers: {
