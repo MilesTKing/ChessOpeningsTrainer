@@ -2,10 +2,11 @@ import '../../node_modules/@chrisoakman/chessboard2/dist/chessboard2.css'
 import {PathwayCustomizer} from '../PathwayCustomizer'
 import {MoveListView} from '../ui/MoveListView';
 import {ChessBoard} from '../ChessBoard'
+import {getCookie} from "../utils/cookies"
 
 const chessboard = ChessBoard('chessboard', onDrop)
 const pathRenderer = MoveListView()
-const pathManager = PathwayCustomizer(pathRenderer)
+const pathManager = PathwayCustomizer()
 pathRenderer.onNodeSelected(nodeSelectionHandler)
 pathRenderer.onNodeDeleted(nodeDeletionHandler)
 pathManager.startPathCreation()
@@ -48,4 +49,33 @@ saveButton.addEventListener("click", () => {
     }
     pathManager.savePath(pathName, 'api')
 })
+const register_form = document.querySelector("#register_form") as HTMLFormElement;
+const API_URL = import.meta.env.VITE_OPENINGS_API_URL
+const REGISTER_URL = import.meta.env.VITE_REGISTER_URL
+
+async function sendData() {
+    if (!register_form) {
+        return; //Raise error and alert user
+    }
+    const formData = new FormData(register_form);
+    const csrftoken = getCookie('csrftoken');
+    try {
+        const response = await fetch(API_URL + REGISTER_URL, {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": csrftoken || "",
+            },
+            credentials: "include"
+
+        });
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+register_form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    sendData();
+});
 

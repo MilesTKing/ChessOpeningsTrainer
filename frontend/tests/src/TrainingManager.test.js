@@ -23,7 +23,7 @@ describe("Chess Game Logic", () => {
         board = ChessBoard("chessboard", () => {
         })
         trainingModule = TrainingManager()
-        trainingModule.startTraining("default")
+        trainingModule.startTraining(defaultPath.name, defaultPath.positions)
     })
 
     test("Prepare board initializes logical board", () => {
@@ -35,12 +35,6 @@ describe("Chess Game Logic", () => {
     test("Set random test position",()=>{
         trainingModule.setRandomPuzzle()
         expect(trainingModule.getPosition()).toBeOneOf(defaultPathPositions)
-    })
-    test("",()=>{
-
-    })
-    test("",()=>{
-
     })
 
 

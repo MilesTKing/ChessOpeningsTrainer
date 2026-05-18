@@ -5,25 +5,34 @@ import {MoveListView} from '../ui/MoveListView';
 
 const chessboard = ChessBoard('chessboard', onDrop)
 const trainingManager = TrainingManager()
-let trainingPath = selectTrainingPath()
-trainingManager.startTraining(trainingPath)
-trainingManager.setRandomPuzzle()
+initiateTraining()
 function onDrop(pieceMoved: ChessboardDropEvent) {
     return 'snapback'
 }
-function selectTrainingPath(){
-    const paths : PathMessage[]= JSON.parse(localStorage.getItem("pathList"))
-    let pathList = ""
-    paths.forEach(path=>{
-        pathList= pathList+ `${path.name}\n`
-    })
-    const selectedPath = prompt(pathList)
-    if(!selectedPath){
-        return "default"
+async function initiateTraining(){
+    const selectedPath = await selectTrainingPath()
+    if (!selectedPath) {
+        return
     }
-    return selectedPath
-
+    trainingManager.startTraining(selectedPath.name, selectedPath.positions)
 }
-function getPaths(){
+async function selectTrainingPath(){
+    try{
+        const userPaths = await trainingManager.getUserPathways('api')
+        let pathNames = ""
+        let pathPositions = new Map()
+        for (const [key, value] of Object.entries(userPaths)){
+            pathNames= pathNames+ `${key}\n`
+            pathPositions.set(key, value)
+        }
+        const selectedPath = prompt(pathNames)
+        if(!selectedPath){
+            return
+        }
+        return {name: selectedPath, positions: pathPositions.get(selectedPath)}
+    }
+    catch(e){
+
+    }
 
 }

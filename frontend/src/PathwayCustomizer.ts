@@ -4,7 +4,9 @@ type playerColor = 'white' | 'black'
 
 function PathwayCustomizer() {
 
-    const API_URL = import.meta.env.VITE_OPENINGS_API_URL;
+    const API_BASE_URL = import.meta.env.VITE_OPENINGS_API_BASE_URL;
+    const API_CSRF = import.meta.env.VITE_OPENINGS_API_CSRF;
+    const OPENINGS_URL = import.meta.env.VITE_OPENINGS_API_OPENINGS;
     let userColor: playerColor;
     const logicalBoard = new Chess()
     let currentPositionNode: PathNode
@@ -108,15 +110,14 @@ function PathwayCustomizer() {
         return savedNodeList
     }
     async function savePath(pathName: string, saveMethod: string = 'api'){
-        await fetch(`${API_URL}/api/csrf/`, {
+        await fetch(API_BASE_URL+API_CSRF, {
             credentials: "include"
         });
         const csrftoken = getCookie('csrftoken');
-        console.log(csrftoken)
         const nodeList = flattenPath(getNode(0))
         const nodePath: PathMessage = {"name": pathName, "positions": nodeList}
         if (saveMethod === 'api'){
-            const openings_api_url = `${API_URL}/api/openings/`
+            const openings_api_url = API_BASE_URL + OPENINGS_URL
             const pathMessage = JSON.stringify(nodePath)
             const response = await fetch(openings_api_url, {
                 method: "POST",
