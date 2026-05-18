@@ -5,9 +5,9 @@ from . import views
 app_name = "openings_manager"
 urlpatterns = [
     path("csrf/", views.csrf),
-    path("auth/", views.login, name="login"),
-    path("auth/", views.logout, name="logout"),
-    path("auth/", views.register, name="register"),
+    path("auth/login", views.login_view, name="login"),
+    path("auth/logout", views.logout, name="logout"),
+    path("auth/register", views.register, name="register"),
     path("openings/", views.openings, name="openings"),
     path("openings/<opening_name>/", views.openings, name="opening-detail"),
 ]
