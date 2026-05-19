@@ -13,7 +13,15 @@ async function initiateTraining(){
     if (!selectedPath) {
         return
     }
-    trainingManager.startTraining(selectedPath.name, selectedPath.positions)
+    console.log(`name: ${ selectedPath.name }\n positions: ${ selectedPath.positions }`)
+    trainingManager.setupTraining(selectedPath.name, selectedPath.positions)
+    const pathTestButton = document.getElementById('path-test-button')
+    if(!pathTestButton){
+        throw new Error('Path Test Button not found')
+    }
+    pathTestButton.addEventListener('click', (e) => {
+        trainingManager.startOpeningTest()
+    })
 }
 async function selectTrainingPath(){
     try{

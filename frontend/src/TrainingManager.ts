@@ -1,5 +1,6 @@
 import {Chess} from 'chess.js'
 import {getCookie} from './utils/cookies'
+import {ChessBoard} from "./ChessBoard";
 function TrainingManager() {
     const API_BASE_URL = import.meta.env.VITE_OPENINGS_API_BASE_URL
     const OPENINGS_URL = import.meta.env.VITE_OPENINGS_API_OPENINGS
@@ -35,7 +36,7 @@ function TrainingManager() {
         }
     }
 
-    function startTraining(selectedPathwayName: string, selectedPathwayPositions: SerializedPathNode[]) {
+    function setupTraining(selectedPathwayName: string, selectedPathwayPositions: SerializedPathNode[]) {
         chessBoard.reset()
         trainingPositions = selectedPathwayPositions
         for (const node of trainingPositions) {
@@ -43,19 +44,32 @@ function TrainingManager() {
         }
     }
 
-    function getPosition() {
+    function getBoardPosition() {
         return chessBoard.fen({forceEnpassantSquare: true})
     }
-
-    function setRandomPuzzle() {
-        const id = Math.floor(Math.random() * trainingPositions.length)
-        const position = getPathPosition(id)
-        console.log(`path position: ${position}`)
-        if (!position) {
-            throw Error
+    function startOpeningTest(){
+        chessBoard.reset()
+        accuracy = 0
+        let remainingPositionIds = Array.from(pathPositionMap.keys())
+        remainingPositionIds.pop() //Removes last position because there's no next moves.
+        if(!remainingPositionIds){
+            return
         }
-        activePosition = id
-        chessBoard.load(position)
+        while(remainingPositionIds.length > 0){
+            const selectedId= setRandomPosition(remainingPositionIds)
+
+            remainingPositionIds.splice(selectedId,1)
+            console.log(`remaining move count:${remainingPositionIds.length}`)
+        }
+    }
+    function setRandomPosition(availableIds: number[]) {
+        const selectedIndex = Math.floor(Math.random() * availableIds.length)
+        console.log(`selectedIndex:${selectedIndex}`)
+        console.log(`availableId list: ${availableIds}`)
+        const selectedId = availableIds[selectedIndex]
+        console.log(`selected id ${selectedId}`)
+        setBoardPosition(selectedId)
+        return selectedIndex
 
     }
 
@@ -66,7 +80,15 @@ function TrainingManager() {
         }
         return position.fen
     }
-
+    function setBoardPosition(id: number) {
+        const positionFen = getPathPosition(id)
+        activePosition = id
+        if (!positionFen) {
+            throw new Error('Path Position not found from Id')
+        }
+        chessBoard.load(positionFen)
+        console.log(chessBoard.ascii())
+    }
     function getNextMoves(id: number) {
         const position = pathPositionMap.get(id)
         if (!position) {
@@ -83,6 +105,6 @@ function TrainingManager() {
         return getNextMoves(activePosition).includes(move)
     }
 
-    return {startTraining, getPosition, setRandomPuzzle, validateMove, getUserPathways}
+    return {setupTraining, getBoardPosition, validateMove, getUserPathways, startOpeningTest}
 }
 export{ TrainingManager }
