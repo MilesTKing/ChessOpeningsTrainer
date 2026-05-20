@@ -8,8 +8,8 @@ function TrainingManager() {
     let accuracy = 0
     let trainingPositions: SerializedPathNode[]
     let pathPositionMap: Map<number, SerializedPathNode> = new Map()
-    let activePosition = 0
-
+    let activePositionId = 0
+    let trainingPositionIds: number[] = []
     async function getUserPathways(source: 'api' | 'localStorage') {
         if (source === 'api') {
             console.log('using api method')
@@ -50,27 +50,25 @@ function TrainingManager() {
     function startOpeningTest(){
         chessBoard.reset()
         accuracy = 0
-        let remainingPositionIds = Array.from(pathPositionMap.keys())
-        remainingPositionIds.pop() //Removes last position because there's no next moves.
-        if(!remainingPositionIds){
+        trainingPositionIds = Array.from(pathPositionMap.keys())
+        if(!trainingPositionIds){
+            throw new Error("No Training Pathway selected.")
+        }
+        trainingPositionIds.pop() //Removes last position because there's no next moves.
+    }
+    function setRandomTrainingPosition() {
+        if (trainingPositionIds.length <= 0){
             return
         }
-        while(remainingPositionIds.length > 0){
-            const selectedId= setRandomPosition(remainingPositionIds)
-
-            remainingPositionIds.splice(selectedId,1)
-            console.log(`remaining move count:${remainingPositionIds.length}`)
-        }
-    }
-    function setRandomPosition(availableIds: number[]) {
-        const selectedIndex = Math.floor(Math.random() * availableIds.length)
+        const selectedIndex = Math.floor(Math.random() * trainingPositionIds.length)
         console.log(`selectedIndex:${selectedIndex}`)
-        console.log(`availableId list: ${availableIds}`)
-        const selectedId = availableIds[selectedIndex]
+        console.log(`availableId list: ${trainingPositionIds}`)
+        const selectedId = trainingPositionIds[selectedIndex]
         console.log(`selected id ${selectedId}`)
         setBoardPosition(selectedId)
+        trainingPositionIds.splice(selectedId,1)
+        console.log(getNextMoves(activePositionId))
         return selectedIndex
-
     }
 
     function getPathPosition(id: number) {
@@ -82,12 +80,15 @@ function TrainingManager() {
     }
     function setBoardPosition(id: number) {
         const positionFen = getPathPosition(id)
-        activePosition = id
         if (!positionFen) {
             throw new Error('Path Position not found from Id')
         }
+        activePositionId = id
         chessBoard.load(positionFen)
         console.log(chessBoard.ascii())
+    }
+    function setBoardPositionFen(fen: string){
+        chessBoard.load(fen)
     }
     function getNextMoves(id: number) {
         const position = pathPositionMap.get(id)
@@ -101,10 +102,17 @@ function TrainingManager() {
         return returnList
     }
 
-    function validateMove(move: string) {
-        return getNextMoves(activePosition).includes(move)
+    function makeMove(sourceSquare: string, targetSquare: string) {
+        return chessBoard.move({from: sourceSquare, to: targetSquare});
+
+    }
+    function validateNextMove(move: string) {
+        console.log('validating moves')
+        console.log(`next moves: ${getNextMoves(activePositionId)} includes ${move}`)
+        console.log(getNextMoves(activePositionId).includes(move))
+        return getNextMoves(activePositionId).includes(move)
     }
 
-    return {setupTraining, getBoardPosition, validateMove, getUserPathways, startOpeningTest}
+    return {setupTraining, getBoardPosition, setBoardPositionFen, setRandomTrainingPosition, makeMove, validateNextMove, getUserPathways, startOpeningTest}
 }
 export{ TrainingManager }

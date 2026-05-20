@@ -23,18 +23,18 @@ describe("Chess Game Logic", () => {
         board = ChessBoard("chessboard", () => {
         })
         trainingModule = TrainingManager()
-        trainingModule.startTraining(defaultPath.name, defaultPath.positions)
+        trainingModule.startOpeningTest(defaultPath.name, defaultPath.positions)
     })
 
     test("Prepare board initializes logical board", () => {
-        expect(trainingModule.getPosition()).toEqual('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+        expect(trainingModule.getBoardPosition()).toEqual('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
     })
     test("Validate played move", ()=>{
-        trainingModule.validateMove("")
+        expect(trainingModule.makeMove("e2",'e4')).toBeTruthy()
     })
     test("Set random test position",()=>{
-        trainingModule.setRandomPuzzle()
-        expect(trainingModule.getPosition()).toBeOneOf(defaultPathPositions)
+        trainingModule.setRandomTrainingPosition()
+        expect(trainingModule.getBoardPosition()).toBeOneOf(defaultPathPositions)
     })
 
 
