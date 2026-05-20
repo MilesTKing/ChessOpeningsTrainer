@@ -2,13 +2,13 @@ import {Chess} from 'chess.js'
 import {getCookie} from "./utils/cookies"
 type playerColor = 'white' | 'black'
 
-function PathwayCustomizer() {
+function PathwayCustomizer(storageMethod: 'api' | 'localStorage') {
 
     const API_BASE_URL = import.meta.env.VITE_OPENINGS_API_BASE_URL;
     const API_CSRF = import.meta.env.VITE_OPENINGS_API_CSRF;
     const OPENINGS_URL = import.meta.env.VITE_OPENINGS_API_OPENINGS;
     let userColor: playerColor;
-    const logicalBoard = new Chess()
+    const chessBoard = new Chess()
     let currentPositionNode: PathNode
     let nodeIdCounter = 0
     const nodeIdMap: Map<string, PathNode> = new Map()
@@ -17,8 +17,8 @@ function PathwayCustomizer() {
      * Validates and makes move, throwing an invalid move error if invalid.
      */
     function makeMove(sourceSquare: string, targetSquare: string) {
-        const move = logicalBoard.move({from: sourceSquare, to: targetSquare})
-        currentPositionNode = addPossibleMove(currentPositionNode, logicalBoard.fen(), move.san)
+        const move = chessBoard.move({from: sourceSquare, to: targetSquare})
+        currentPositionNode = addPossibleMove(currentPositionNode, chessBoard.fen(), move.san)
         return {move: move.san, id: currentPositionNode.id}
     }
 
@@ -42,8 +42,8 @@ function PathwayCustomizer() {
         const node = getNode(nodeId)
         if (node) {
             currentPositionNode = node
-            logicalBoard.load(currentPositionNode.fen)
-            return logicalBoard.fen()
+            chessBoard.load(currentPositionNode.fen)
+            return chessBoard.fen()
         }
     }
 
@@ -79,23 +79,23 @@ function PathwayCustomizer() {
         nodeIdMap.delete(nodeId.toString())
         if (!getNode(currentPositionNode.id)) {
             currentPositionNode = parentNode
-            logicalBoard.load(currentPositionNode.fen)
+            chessBoard.load(currentPositionNode.fen)
         }
     }
 
     /**
      *Gets logical board's position as a FEN. Shows en passant even if capture isn't possible
      */
-    function getPosition() {
-        return logicalBoard.fen({forceEnpassantSquare: true})
+    function getBoardPosition() {
+        return chessBoard.fen({forceEnpassantSquare: true})
     }
 
     /**
      * Resets logical chessboard to start position. Creates a node for the starting position
      */
     function startPathCreation() {
-        logicalBoard.reset()
-        currentPositionNode = createNode(logicalBoard.fen())
+        chessBoard.reset()
+        currentPositionNode = createNode(chessBoard.fen())
     }
     function flattenPath(rootNode = getNode(0) as PathNode, savedNodeList: SerializedPathNode[] = []){
         const nextMoveList: SerializedPathNodeMove[] = []
@@ -109,14 +109,16 @@ function PathwayCustomizer() {
         }
         return savedNodeList
     }
-    async function savePath(pathName: string, saveMethod: string = 'api'){
-        await fetch(API_BASE_URL+API_CSRF, {
-            credentials: "include"
-        });
-        const csrftoken = getCookie('csrftoken');
+    async function savePath(pathName: string){
         const nodeList = flattenPath(getNode(0))
         const nodePath: PathMessage = {"name": pathName, "positions": nodeList}
-        if (saveMethod === 'api'){
+        if (storageMethod === 'api'){
+            const csrftoken = getCookie('csrftoken');
+
+            await fetch(API_BASE_URL+API_CSRF, {
+                credentials: "include"
+            });
+
             const openings_api_url = API_BASE_URL + OPENINGS_URL
             const pathMessage = JSON.stringify(nodePath)
             const response = await fetch(openings_api_url, {
@@ -139,7 +141,7 @@ function PathwayCustomizer() {
             console.log(json)
             return
         }
-        else if (saveMethod === 'localStorage'){
+        else if (storageMethod === 'localStorage'){
             if (!localStorage.getItem("pathList")){
                 localStorage.setItem("pathList", JSON.stringify([]))
             }
@@ -161,7 +163,7 @@ function PathwayCustomizer() {
     }
 
 
-    return {startPathCreation, makeMove, setActiveNode, getActiveNodeId, getPosition, deleteNode, savePath}
+    return {startPathCreation, makeMove, setActiveNode, getActiveNodeId, getBoardPosition, deleteNode, savePath}
 }
 
 export {PathwayCustomizer}

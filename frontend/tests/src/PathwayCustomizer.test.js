@@ -14,8 +14,7 @@ describe("Chess Game Logic", () => {
         document.body.innerHTML = `<div id="chessboard" style="width: 400px"></div>`
         board = ChessBoard("chessboard", () => {
         })
-        const mockMoveListRenderer = {}
-        pathCreator = PathwayCustomizer(mockMoveListRenderer)
+        pathCreator = PathwayCustomizer('localStorage')
         pathCreator.startPathCreation()
     })
     test("Setting active Node by id.", () => {
@@ -30,7 +29,7 @@ describe("Chess Game Logic", () => {
         pathCreator.makeMove("e2", "e4")
         pathCreator.makeMove("e7", "e5")
         pathCreator.makeMove("d2", "d4")
-        expect(pathCreator.getPosition()).toEqual("rnbqkbnr/pppp1ppp/8/4p3/3PP3/8/PPP2PPP/RNBQKBNR b KQkq d3 0 2")
+        expect(pathCreator.getBoardPosition()).toEqual("rnbqkbnr/pppp1ppp/8/4p3/3PP3/8/PPP2PPP/RNBQKBNR b KQkq d3 0 2")
     })
     test("Get active node by id.", () => {
         pathCreator.makeMove("e2", "e4")

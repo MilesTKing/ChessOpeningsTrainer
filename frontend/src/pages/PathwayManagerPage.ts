@@ -6,7 +6,7 @@ import {getCookie} from "../utils/cookies"
 
 const chessboard = ChessBoard('chessboard', onDrop)
 const pathRenderer = MoveListView()
-const pathManager = PathwayCustomizer()
+const pathManager = PathwayCustomizer('api')
 pathRenderer.onNodeSelected(nodeSelectionHandler)
 pathRenderer.onNodeDeleted(nodeDeletionHandler)
 pathManager.startPathCreation()
@@ -21,7 +21,7 @@ if (flip_board_icon) {
 function onDrop(pieceMoved: ChessboardDropEvent) {
     try {
         const managerMove = pathManager.makeMove(pieceMoved.source, pieceMoved.target) //Assertion valid because makeMove will throw an error otherwise.
-        chessboard.setPosition(pathManager.getPosition())
+        chessboard.setPosition(pathManager.getBoardPosition())
         pathRenderer.onMoveAddition({move: managerMove.move, piece: pieceMoved.piece, nodeIdIndex: managerMove.id})
     } catch (e) {
         return 'snapback'
@@ -30,7 +30,7 @@ function onDrop(pieceMoved: ChessboardDropEvent) {
 
 function nodeSelectionHandler(nodeId: number) {
     pathManager.setActiveNode(nodeId)
-    const logicalBoardPosition = pathManager.getPosition()
+    const logicalBoardPosition = pathManager.getBoardPosition()
     if (logicalBoardPosition) {
         chessboard.setPosition(logicalBoardPosition)
     }
@@ -38,7 +38,7 @@ function nodeSelectionHandler(nodeId: number) {
 
 function nodeDeletionHandler(parentNodeId: number, nodeId: number) {
     pathManager.deleteNode(parentNodeId, nodeId)
-    chessboard.setPosition(pathManager.getPosition())
+    chessboard.setPosition(pathManager.getBoardPosition())
 }
 
 const saveButton = document.getElementById("save-button") as HTMLButtonElement
@@ -47,7 +47,7 @@ saveButton.addEventListener("click", () => {
     if (!pathName) {
         throw new Error(`Invalid path name`)
     }
-    pathManager.savePath(pathName, 'api')
+    pathManager.savePath(pathName)
 })
 const register_form = document.querySelector("#register_form") as HTMLFormElement;
 const API_URL = import.meta.env.VITE_OPENINGS_API_URL
