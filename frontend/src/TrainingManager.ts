@@ -4,6 +4,8 @@ function TrainingManager() {
     const API_BASE_URL = import.meta.env.VITE_OPENINGS_API_BASE_URL
     const OPENINGS_URL = import.meta.env.VITE_OPENINGS_API_OPENINGS
     const chessBoard = new Chess()
+    let attemptedMoves = 0
+    let correctMoves= 0
     let accuracy = 0
     let trainingPositions: SerializedPathNode[]
     let pathPositionMap: Map<number, SerializedPathNode> = new Map()
@@ -37,6 +39,9 @@ function TrainingManager() {
 
     function setupTraining(selectedPathwayName: string, selectedPathwayPositions: SerializedPathNode[]) {
         chessBoard.reset()
+        attemptedMoves = 0
+        correctMoves= 0
+        accuracy = 0
         trainingPositions = selectedPathwayPositions
         for (const node of trainingPositions) {
             pathPositionMap.set(node.id, node)
@@ -106,10 +111,19 @@ function TrainingManager() {
 
     }
     function validateNextMove(move: string) {
-        console.log('validating moves')
-        console.log(`next moves: ${getNextMoves(activePositionId)} includes ${move}`)
-        console.log(getNextMoves(activePositionId).includes(move))
-        return getNextMoves(activePositionId).includes(move)
+
+        if(!getNextMoves(activePositionId).includes(move)){
+            attemptedMoves++
+            accuracy = Math.round(correctMoves/attemptedMoves*100)
+            console.log(`accuracy: ${accuracy}`)
+            return false
+        }
+        correctMoves++
+        attemptedMoves++
+        accuracy = Math.round(correctMoves/attemptedMoves*100)
+        console.log(`accuracy: ${accuracy}`)
+        return true
+
     }
 
     return {setupTraining, getBoardPosition, setBoardPositionFen, setRandomTrainingPosition, makeMove, validateNextMove, getUserPathways, startOpeningTest}
