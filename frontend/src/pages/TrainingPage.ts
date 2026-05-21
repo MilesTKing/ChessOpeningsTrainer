@@ -1,30 +1,39 @@
-import '../../node_modules/@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.css'
+import '../../node_modules/@chrisoakman/chessBoardjs/dist/chessBoard-1.0.0.min.css'
 import {TrainingManager} from '../TrainingManager'
-import {ChessBoard} from '../ChessBoard'
+import logicalBoard from '../ChessBoard'
 
 const trainingManager = TrainingManager()
 initiateTraining()
-const chessboard = ChessBoard('chessboard', onDrop)
-function onDrop(pieceMoved: ChessboardDropEvent) {
+const chessBoard = new logicalBoard('chessboard', onDrop, onMoveEnd)
+function onDrop(source, target, piece, newPos, oldPos, orientation) {
+    console.log(`pieceMoved: ${piece}`)
     try{
         const oldPosition = trainingManager.getBoardPosition()
-        const managerMove = trainingManager.makeMove(pieceMoved.source, pieceMoved.target) //Assertion valid because makeMove will throw an error otherwise.
+        console.log(`source: ${source} dest: ${target}`)
+        const managerMove = trainingManager.makeMove(source, target) //Assertion valid because makeMove will throw an error otherwise.
+        console.log(`move: ${managerMove}`)
         if (!trainingManager.validateNextMove(managerMove.san)){
+            console.log('validated move')
             trainingManager.setBoardPositionFen(oldPosition)
+            console.log('set old pos')
             return 'snapback'
         }
-        setTimeout(()=>{
-            trainingManager.setRandomTrainingPosition()
-            console.log("set graphical to new pos")
-            chessboard.setPosition(trainingManager.getBoardPosition())
-            console.log('done'),250
-        })
-
+        chessBoard.setPosition(trainingManager.getBoardPosition())
     }
     catch(e){
-        console.log("failed to droppy toppy")
+        console.log(e)
         return 'snapback'
     }
+}
+
+/**
+ * Triggers after an animation finishes. Must call setPosition() with useAnimation: false, otherwise it causes an infinite loop.
+ */
+function onMoveEnd(){
+    trainingManager.setRandomTrainingPosition()
+    console.log("set graphical to new pos")
+    chessBoard.setPosition(trainingManager.getBoardPosition(), false)
+    console.log('done')
 }
 async function initiateTraining(){
     const selectedPath = await selectTrainingPath()
@@ -41,7 +50,7 @@ async function initiateTraining(){
     pathTestButton.addEventListener('click', (e) => {
         trainingManager.startOpeningTest()
         trainingManager.setRandomTrainingPosition()
-        chessboard.setPosition(trainingManager.getBoardPosition())
+        chessBoard.setPosition(trainingManager.getBoardPosition(), false)
     })
 }
 async function selectTrainingPath(){
