@@ -1,6 +1,5 @@
 import {Chess} from 'chess.js'
 import {getCookie} from './utils/cookies'
-import {ChessBoard} from "./ChessBoard";
 function TrainingManager() {
     const API_BASE_URL = import.meta.env.VITE_OPENINGS_API_BASE_URL
     const OPENINGS_URL = import.meta.env.VITE_OPENINGS_API_OPENINGS

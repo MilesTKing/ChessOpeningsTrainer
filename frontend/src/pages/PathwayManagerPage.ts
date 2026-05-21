@@ -1,4 +1,4 @@
-import '../../node_modules/@chrisoakman/chessboard2/dist/chessboard2.css'
+import '../../node_modules/@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.css'
 import {PathwayCustomizer} from '../PathwayCustomizer'
 import {MoveListView} from '../ui/MoveListView';
 import {ChessBoard} from '../ChessBoard'

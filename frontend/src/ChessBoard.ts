@@ -1,32 +1,23 @@
-import '../node_modules/@chrisoakman/chessboard2/dist/chessboard2.min.js'
-import {onDropEvent} from "./types/ChessboardTypes";
+import '../node_modules/@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.js'
 
-function ChessBoard(boardElementId: string, onDrop: onDropEvent) {
-    const config: Chessboard2Config = {
+function ChessBoard(boardElementId: string, onDrop) {
+    const config= {
         position: 'start',
         draggable: true,
         onDrop,
         showErrors: 'console'
     }
-    const chessboard = Chessboard2(boardElementId, config);
-
+    const chessboard = Chessboard(boardElementId, config);
+    console.log(chessboard);
     function setPosition(position: string) {
         chessboard.position(position)
-    }
-
-    function setMove(move: string) {
-        chessboard.move(move);
-    }
-
-    function getPosition() {
-        return chessboard.position("fen");
     }
 
     function flipBoard() {
         chessboard.flip();
     }
 
-    return {setMove, setPosition, getPosition, flipBoard}
+    return {setPosition, flipBoard}
 }
 
 export {ChessBoard}
