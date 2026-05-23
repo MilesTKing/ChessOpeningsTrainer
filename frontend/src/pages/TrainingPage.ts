@@ -5,6 +5,8 @@ import logicalBoard from '../ChessBoard'
 const trainingManager = TrainingManager()
 initiateTraining()
 const chessBoard = new logicalBoard('chessboard', onDrop, onMoveEnd)
+const flipBoardIcon = document.getElementById('flip-board-icon')
+flipBoardIcon.addEventListener('click', e => {chessBoard.flipBoard()})
 function onDrop(source, target, piece, newPos, oldPos, orientation) {
     console.log(`pieceMoved: ${piece}`)
     try{

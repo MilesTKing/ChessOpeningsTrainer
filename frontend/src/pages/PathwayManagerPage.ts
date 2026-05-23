@@ -1,10 +1,10 @@
 import '../../node_modules/@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.css'
 import {PathwayCustomizer} from '../PathwayCustomizer'
 import {MoveListView} from '../ui/MoveListView';
-import {ChessBoard} from '../ChessBoard'
+import logicalBoard from '../ChessBoard'
 import {getCookie} from "../utils/cookies"
 
-const chessboard = ChessBoard('chessboard', onDrop)
+const chessboard = logicalBoard('chessboard', onDrop)
 const pathRenderer = MoveListView()
 const pathManager = PathwayCustomizer('api')
 pathRenderer.onNodeSelected(nodeSelectionHandler)
@@ -12,6 +12,7 @@ pathRenderer.onNodeDeleted(nodeDeletionHandler)
 pathManager.startPathCreation()
 
 const flip_board_icon = document.getElementById("flip-board-icon")
+console.log(`flip icon: ${flip_board_icon}`)
 if (flip_board_icon) {
     flip_board_icon.addEventListener("click", () => {
         chessboard.flipBoard()
