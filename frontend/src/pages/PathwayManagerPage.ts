@@ -11,12 +11,12 @@ pathRenderer.onNodeSelected(nodeSelectionHandler)
 pathRenderer.onNodeDeleted(nodeDeletionHandler)
 pathManager.startPathCreation()
 
-const flip_board_icon = document.getElementById("flip-board-icon")
-console.log(`flip icon: ${flip_board_icon}`)
-if (flip_board_icon) {
-    flip_board_icon.addEventListener("click", () => {
-        chessboard.flipBoard()
-    })
+const flipBoardIcon = document.getElementById('flip-board-icon')
+if(!flipBoardIcon) {
+    console.log("Flip board icon not found.")
+}
+else{
+    flipBoardIcon.addEventListener('click', e => {chessboard.flipBoard()})
 }
 
 function onDrop(pieceMoved: ChessboardDropEvent) {
