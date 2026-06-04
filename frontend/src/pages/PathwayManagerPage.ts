@@ -1,10 +1,10 @@
 import '../../node_modules/@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.css'
 import {PathwayCustomizer} from '../PathwayCustomizer'
 import {MoveListView} from '../ui/MoveListView';
-import logicalBoard from '../ChessBoard'
+import chessBoard from '../ChessBoard'
 import {getCookie} from "../utils/cookies"
 
-const chessboard = logicalBoard('chessboard', onDrop)
+const chessboard = chessBoard('chessboard', onDrop)
 const pathRenderer = MoveListView()
 const pathManager = PathwayCustomizer('api')
 pathRenderer.onNodeSelected(nodeSelectionHandler)
