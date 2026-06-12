@@ -25,6 +25,7 @@ function onDrop(pieceMoved: ChessboardDropEvent) {
         chessboard.setPosition(pathManager.getBoardPosition())
         pathRenderer.onMoveAddition({move: managerMove.move, piece: pieceMoved.piece, nodeIdIndex: managerMove.id})
     } catch (e) {
+        console.log('snapshot error', e)
         return 'snapback'
     }
 }

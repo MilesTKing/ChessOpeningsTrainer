@@ -1,16 +1,16 @@
-import '../../node_modules/@chrisoakman/chessBoardjs/dist/chessBoard-1.0.0.min.css'
+import '../../node_modules/@chrisoakman/chessboardjs/dist/chessboard-1.0.0.min.css'
 import {TrainingManager} from '../TrainingManager'
 import chessBoard from '../ChessBoard'
 
 const trainingManager = TrainingManager()
-initiateTraining()
-const chessBoard = new chessBoard('chessboard', onDrop, onMoveEnd)
+const chessboard = chessBoard('chessboard', onDrop, onMoveEnd)
 const flipBoardIcon = document.getElementById('flip-board-icon')
+initiateTraining()
 if(!flipBoardIcon) {
     console.log("Flip board icon not found.")
 }
 else{
-    flipBoardIcon.addEventListener('click', e => {chessBoard.flipBoard()})
+    flipBoardIcon.addEventListener('click', e => {chessboard.flipBoard()})
 }
 function onDrop(source, target, piece, newPos, oldPos, orientation) {
     console.log(`pieceMoved: ${piece}`)
@@ -25,7 +25,7 @@ function onDrop(source, target, piece, newPos, oldPos, orientation) {
             console.log('set old pos')
             return 'snapback'
         }
-        chessBoard.setPosition(trainingManager.getBoardPosition())
+        chessboard.setPosition(trainingManager.getBoardPosition())
     }
     catch(e){
         console.log(e)
@@ -39,7 +39,7 @@ function onDrop(source, target, piece, newPos, oldPos, orientation) {
 function onMoveEnd(){
     trainingManager.setRandomTrainingPosition()
     console.log("set graphical to new pos")
-    chessBoard.setPosition(trainingManager.getBoardPosition(), false)
+    chessboard.setPosition(trainingManager.getBoardPosition(), false)
     console.log('done')
 }
 async function initiateTraining(){
@@ -57,7 +57,7 @@ async function initiateTraining(){
     pathTestButton.addEventListener('click', (e) => {
         trainingManager.startOpeningTest()
         trainingManager.setRandomTrainingPosition()
-        chessBoard.setPosition(trainingManager.getBoardPosition(), false)
+        chessboard.setPosition(trainingManager.getBoardPosition(), false)
     })
 }
 async function selectTrainingPath(){
