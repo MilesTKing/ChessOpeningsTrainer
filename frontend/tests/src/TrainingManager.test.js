@@ -1,8 +1,6 @@
 import {beforeEach, describe, test, expect} from 'vitest'
 import {TrainingManager} from '../../src/TrainingManager'
-import {ChessBoard} from "../../src/ChessBoard"
-import {Window} from 'happy-dom';
-
+import logicalBoard from "../../src/ChessBoard"
 const window = new Window({url: 'https://localhost:8080'});
 const document = window.document;
 
@@ -19,9 +17,7 @@ describe("Chess Game Logic", () => {
     })
 
     beforeEach(() => {
-        document.body.innerHTML = `<div id="chessboard" style="width: 400px"></div>`
-        board = ChessBoard("chessboard", () => {
-        })
+
         trainingModule = TrainingManager()
         trainingModule.startOpeningTest(defaultPath.name, defaultPath.positions)
     })
