@@ -1,6 +1,11 @@
+import { Chessboard } from 'react-chessboard';
+
 function Pathway(){
-    return(
-        <p>Hi from pathway</p>
-    )
+    const chessboardOptions = {
+        // your config options here
+    };
+
+    return <Chessboard options={chessboardOptions} />;
+
 }
 export default Pathway

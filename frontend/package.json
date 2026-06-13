@@ -10,7 +10,6 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@types/chessboardjs": "^0.3.6",
     "@types/cytoscape-context-menus": "^4.1.5",
     "@types/cytoscape-dagre": "^2.3.4",
     "typescript": "^5.9.3",
@@ -18,12 +17,16 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
-    "@chrisoakman/chessboardjs": "^1.0.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@types/react-router": "^5.1.20",
     "chess.js": "github:MilesTKing/my-chess.js",
     "cytoscape": "^3.33.1",
     "cytoscape-context-menus": "^4.2.1",
     "cytoscape-dagre": "^2.5.0",
-    "happy-dom": "^20.4.0",
-    "jest-environment-jsdom": "^30.2.0"
+    "react": "^19.2.7",
+    "react-chessboard": "^5.10.0",
+    "react-dom": "^19.2.7",
+    "react-router": "^7.17.0"
   }
 }

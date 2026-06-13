@@ -1,6 +1,10 @@
+import { Chessboard } from 'react-chessboard';
+
 function Training(){
-    return (
-        <p>Hi from Training</p>
-    )
+    const chessboardOptions = {
+        // your config options here
+    };
+
+    return <Chessboard options={chessboardOptions} />;
 }
 export default Training;
