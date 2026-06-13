@@ -3,40 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>TrainingPage</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="./main.css">
-    <script type="module" defer src="src/pages/PathwayManagerPage.ts"></script>
     <link rel="icon" href="./src/assets/favicon.png">
 </head>
 <body>
-<a href="TrainingPage.html" >TrainingPage</a>
-<div id="gameboard-container">
-    <div id="chessboard-options">
-        <button id="flip-board-icon" class="cursor_pointer">
-            <img class="board_option" src="src/assets/flip-board.svg" alt="flip board icon">
-        </button>
-        <button id= "save-button" class="cursor_pointer">
-            <img class="board_option" src="src/assets/save.svg" alt="save button icon">
-        </button>
+<div id="root"></div>
+<script type="module" src="./src/main.tsx"></script>
 
-    </div>
-    <div id="chessboard"></div>
-    <div id="gameboard-sidebar">
-        <div id="sideboard-title"> Opening Analysis</div>
-        <div id="sideboard-navbar"></div>
-        <div id="move-list-graph"></div>
-        <div id="sideboard-controls"></div>
-
-    </div>
-    <form id = "register_form" action="http://localhost:8000/api/auth/register" method="post">
-        <label for="email">Email</label><br>
-        <input type="email" id="email" name="email"><br>
-        <label for="name">Name</label><br>
-        <input type="text" id="name" name="name"><br>
-        <label for="password">Password</label><br>
-        <input type="password" id="password" name="password"><br>
-        <button type="submit">Submit</button>
-    </form>
-</div>
 </body>
 </html>

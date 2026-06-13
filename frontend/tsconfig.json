@@ -26,8 +26,18 @@
     "skipLibCheck": true,
 
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "types": []
+    "types": [],
+
+    //React Migration Additions
+    "jsx": "react-jsx",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowImportingTsExtensions": true,
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+
+
 }
