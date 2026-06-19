@@ -1,9 +1,8 @@
-import './App.css'
+import styles from './App.module.css'
 
 function App() {
-  console.log("balls")
   return (
-      <p>Hi</p>
+      <p className={styles.buh}>Hi</p>
   )
 }
 

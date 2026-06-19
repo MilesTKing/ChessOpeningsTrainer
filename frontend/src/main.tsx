@@ -2,8 +2,8 @@ import { StrictMode} from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router";
 import App from './App.tsx'
-import Training from './Training.tsx'
-import Pathway from './Pathway.tsx'
+import Training from './pages/Training.tsx'
+import Pathway from './pages/Pathway.tsx'
 const router = createBrowserRouter([
     {
         path: '/',
