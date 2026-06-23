@@ -1,0 +1,9 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    height: 5rem;
+    align-items: center;
+}
+.headerItem{
+    flex: auto;
+}

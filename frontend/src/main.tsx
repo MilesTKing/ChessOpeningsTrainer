@@ -14,7 +14,7 @@ const router = createBrowserRouter([
         element: <Training/>,
     },
     {
-        path: 'pathway',
+        path: 'pathwayCreator',
         element: <Pathway/>,
     }
     ]

@@ -1,8 +1,8 @@
 import styles from './App.module.css'
-
+import Header from './components/nav/Header.tsx'
 function App() {
   return (
-      <p className={styles.buh}>Hi</p>
+      <div className={styles.bood}><Header></Header></div> 
   )
 }
 
