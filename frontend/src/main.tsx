@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router";
 import App from './App.tsx'
 import Training from './pages/Training.tsx'
-import Pathway from './pages/Pathway.tsx'
+import Openings from './pages/Openings.tsx'
 const router = createBrowserRouter([
     {
         path: '/',
@@ -14,8 +14,8 @@ const router = createBrowserRouter([
         element: <Training/>,
     },
     {
-        path: 'pathwayCreator',
-        element: <Pathway/>,
+        path: 'openings',
+        element: <Openings/>,
     }
     ]
 )

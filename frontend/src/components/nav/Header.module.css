@@ -3,7 +3,20 @@
     flex-direction: row;
     height: 5rem;
     align-items: center;
+    justify-content: center;
 }
 .headerItem{
     flex: auto;
+    margin: 1rem;
+    text-decoration: none;
+    color: black;
+
+}
+Link{
+    color: red;
+}
+.navButton{
+    padding: 1rem;
+    border-radius: 10%;
+    background-color: #3a6aa8ff;
 }

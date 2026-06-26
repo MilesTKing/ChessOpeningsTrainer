@@ -1,6 +1,6 @@
 import { Chessboard } from 'react-chessboard';
 import Header from '../components/nav/Header.tsx'
-function Training(){
+function Openings(){
     const chessboardOptions = {
         // your config options here
     };
@@ -11,4 +11,4 @@ function Training(){
     </>
 
 }
-export default Training;
+export default Openings
