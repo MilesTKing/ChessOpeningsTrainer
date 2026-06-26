@@ -1,3 +1,6 @@
+.base{
+    composes: palette from '../../styles/base.css';
+}
 .header{
     display: flex;
     flex-direction: row;
@@ -11,9 +14,6 @@
     text-decoration: none;
     color: black;
 
-}
-Link{
-    color: red;
 }
 .navButton{
     padding: 1rem;

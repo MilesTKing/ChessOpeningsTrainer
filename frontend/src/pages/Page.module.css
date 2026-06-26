@@ -1,6 +1,5 @@
-:root{
-    --background-color: #573c24
-}
+/* Source of palette variables*/
 .page{
-    background-color: var(--background-color);
+    composes: palette from '../styles/base.css';
+    background-color: var(--palette_dark_brown);
 }
