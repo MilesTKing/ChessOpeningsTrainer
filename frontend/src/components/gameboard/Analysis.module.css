@@ -1,0 +1,30 @@
+.analysis{
+    composes: palette from '../../styles/base.css';
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    background-color: var(--palette_blue);
+}
+.title{
+    flex: auto;
+    text-align: center;
+}
+.navBar{
+    flex: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--palette_dark_blue);
+}
+.navBarItem{
+    text-align: center;
+    border: 1px solid black;
+    height: 100%;
+    width: 100%;
+}
+.nodeContainer{
+    composes: palette from '../../styles/base.css';
+    flex: 2 1 70vh;
+    background-color: white;
+}
