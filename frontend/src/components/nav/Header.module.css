@@ -4,13 +4,13 @@
 .header{
     display: flex;
     flex-direction: row;
-    height: 5rem;
+    height: 8vh;
     align-items: center;
     justify-content: center;
 }
 .headerItem{
     flex: auto;
-    margin: 1rem;
+    margin: 0 1rem 0 1rem;
     text-decoration: none;
     color: black;
 
