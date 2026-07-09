@@ -1,6 +1,9 @@
 import { Chessboard } from 'react-chessboard';
 import Header from '../components/nav/Header.tsx'
+import Analysis from '../components/gameboard/Analysis.tsx'
 import pageStyles from './Page.module.css'
+import styles from './Openings.module.css'
+
 function Openings(){
     const chessboardOptions = {
         // your config options here
@@ -8,7 +11,10 @@ function Openings(){
 
     return <div className={pageStyles.page}>
         <Header></Header>
-        <Chessboard options={chessboardOptions} />;
+        <section className={styles.gameBoard}>
+            <Chessboard options={chessboardOptions} />
+            <Analysis/>
+        </section>
     </div>
 
 }
