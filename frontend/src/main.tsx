@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import App from './App.tsx'
 import Training from './pages/Training.tsx'
 import Openings from './pages/Openings.tsx'
+import 'normalize.css'
 const router = createBrowserRouter([
     {
         path: '/',

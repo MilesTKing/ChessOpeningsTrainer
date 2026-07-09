@@ -25,6 +25,7 @@
     "cytoscape": "^3.33.1",
     "cytoscape-context-menus": "^4.2.1",
     "cytoscape-dagre": "^2.5.0",
+    "normalize.css": "^8.0.1",
     "react": "^19.2.7",
     "react-chessboard": "^5.10.0",
     "react-dom": "^19.2.7",
