@@ -15,16 +15,19 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: var(--palette_dark_blue);
 }
 .navBarItem{
     text-align: center;
     border: 1px solid black;
     height: 100%;
     width: 100%;
+    background-color: var(--palette_dark_blue);
 }
-.nodeContainer{
+.navBarItem:hover{
+    opacity: 0.8;
+}
+.analysisBody{
     composes: palette from '../../styles/base.css';
     flex: 2 1 70vh;
-    background-color: white;
+    background-color: var(--palette_blue_gray);
 }
