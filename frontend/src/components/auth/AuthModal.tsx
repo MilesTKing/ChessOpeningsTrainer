@@ -12,10 +12,9 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
             method: 'POST',
             body: formData,
             headers: {
-                "Content-Type": "application/json",
                 "X-CSRFToken": csrftoken || "",
-                mode: 'same-origin',
             },
+            mode: 'same-origin',
             credentials: 'include',
         })
 
@@ -30,10 +29,9 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
             method: 'POST',
             body: formData,
             headers: {
-                "Content-Type": "application/json",
                 "X-CSRFToken": csrftoken || "",
-                mode: 'same-origin',
             },
+            mode: 'same-origin',
             credentials: 'include'
         })
         console.log("registered user. csrftoken=", csrftoken)
@@ -51,6 +49,10 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
                 </div>
                 <div className={styles.body}>
                     <form className={styles.authForm} onSubmit={loginUser}>
+                        <label htmlFor="name">
+                            Email
+                            <input name={'name'} type={'text'} placeholder={'name'}></input>
+                        </label>
                         <label htmlFor="email">
                             Email
                             <input name={'email'} type={'email'} placeholder={'email'}></input>
@@ -59,7 +61,7 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
                             Password
                             <input name={'password'} type={'password'} placeholder={'password'}></input>
                         </label>
-                        <input type={'submit'} value={'Submit'} onClick={onClose}></input>
+                        <input type={'submit'} value={'Submit'} ></input>
                     </form>
                 </div>
             </div>
@@ -77,6 +79,10 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
                 </div>
                 <div className={styles.body}>
                     <form className={styles.authForm} onSubmit={registerUser}>
+                        <label htmlFor="name">
+                            Email
+                            <input name={'name'} type={'text'} placeholder={'name'}></input>
+                        </label>
                         <label htmlFor="email">
                             Email
                             <input name={'email'} type={'email'} placeholder={'email'}></input>
