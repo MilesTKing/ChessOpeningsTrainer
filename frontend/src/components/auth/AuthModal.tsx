@@ -1,7 +1,44 @@
 import styles from './AuthModal.module.css'
 import {useState} from 'react'
+import {getCookie} from '../../utils/cookies.ts'
 export default function AuthModal({onClose}: {onClose: () => void}) {
     const [authMethod, setAuthMethod] = useState('login')
+    async function loginUser(e: React.SubmitEvent){
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const login_URL= import.meta.env.VITE_OPENINGS_API_BASE_URL + import.meta.env.VITE_OPENINGS_API_LOGIN
+        const csrftoken = getCookie('csrftoken')
+        await fetch(login_URL, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken || "",
+                mode: 'same-origin',
+            },
+            credentials: 'include',
+        })
+
+    }
+    async function registerUser(e: React.SubmitEvent) {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const register_URL= import.meta.env.VITE_OPENINGS_API_BASE_URL + import.meta.env.VITE_OPENINGS_API_REGISTER
+        const csrftoken = getCookie('csrftoken')
+
+        await fetch(register_URL, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken || "",
+                mode: 'same-origin',
+            },
+            credentials: 'include'
+        })
+        console.log("registered user. csrftoken=", csrftoken)
+    }
+
     if (authMethod === 'login') {
         return (
             <div className={styles.container}>
@@ -13,7 +50,7 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
                     </div>
                 </div>
                 <div className={styles.body}>
-                    <form className={styles.authForm}>
+                    <form className={styles.authForm} onSubmit={loginUser}>
                         <label htmlFor="email">
                             Email
                             <input name={'email'} type={'email'} placeholder={'email'}></input>
@@ -22,7 +59,7 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
                             Password
                             <input name={'password'} type={'password'} placeholder={'password'}></input>
                         </label>
-                        <input type={'button'} value={'Submit'} onClick={onClose}></input>
+                        <input type={'submit'} value={'Submit'} onClick={onClose}></input>
                     </form>
                 </div>
             </div>
@@ -39,7 +76,7 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
                     </div>
                 </div>
                 <div className={styles.body}>
-                    <form className={styles.authForm}>
+                    <form className={styles.authForm} onSubmit={registerUser}>
                         <label htmlFor="email">
                             Email
                             <input name={'email'} type={'email'} placeholder={'email'}></input>
@@ -48,7 +85,7 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
                             Password
                             <input name={'password'} type={'password'} placeholder={'password'}></input>
                         </label>
-                        <input type={'button'} value={'Submit'} onClick={onClose}></input>
+                        <input type={'submit'} value={'Submit'} ></input>
                     </form>
                 </div>
             </div>
