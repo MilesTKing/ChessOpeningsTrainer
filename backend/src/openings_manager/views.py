@@ -1,7 +1,6 @@
 from http.client import HTTPResponse
 
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
@@ -11,6 +10,13 @@ from django.views.decorators.http import require_http_methods, require_POST, req
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
+# Source - https://stackoverflow.com/a/17874111
+# Posted by Victor Castillo Torres, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-07-13, License - CC BY-SA 3.0
+
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 @ensure_csrf_cookie
 def csrf(request):
@@ -32,7 +38,7 @@ def register(request):
 
     user = User.objects.create_user(name, email, password)
     user.save()
-    return HttpResponseRedirect(request.POST.get('next','/'))
+    return HttpResponse('Signed Up', status=200)
 
 @require_POST
 def login_view(request):
@@ -41,14 +47,14 @@ def login_view(request):
     password = request.POST.get('password')
     name = request.POST.get('name')
     if not name:
-        return HttpResponse('Missing password', status=400)
+        return HttpResponse('Missing name', status=400)
     if not email:
         return HttpResponse('Missing email', status=400)
     if not password:
         return HttpResponse('Missing password', status=400)
-    user = authenticate(request, username=name, password=password)
+    user = authenticate(request, email=email, password=password)
     login(request, user)
-    return HttpResponseRedirect(request.POST.get('next','/'))
+    return HttpResponse('Logged in', status=200)
 
 @require_POST
 def logout(request):

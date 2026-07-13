@@ -37,7 +37,6 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    "polls.apps.PollsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -92,7 +91,7 @@ WSGI_APPLICATION = 'chess_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        "NAME": "chess_openings",
+        "NAME": "chess_openings_manager",
         "USER": "postgres",
         "PASSWORD": "meow",
         "HOST": "127.0.0.1",
@@ -149,3 +148,5 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
 ]
 CORS_ALLOW_CREDENTIALS = True
+
+AUTH_USER_MODEL= "openings_manager.CustomUser"
