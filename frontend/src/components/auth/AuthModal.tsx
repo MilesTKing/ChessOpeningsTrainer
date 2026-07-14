@@ -8,15 +8,17 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
         const formData = new FormData(e.target)
         const login_URL= import.meta.env.VITE_OPENINGS_API_BASE_URL + import.meta.env.VITE_OPENINGS_API_LOGIN
         const csrftoken = getCookie('csrftoken')
-        await fetch(login_URL, {
+        const response= await fetch(login_URL, {
             method: 'POST',
             body: formData,
             headers: {
                 "X-CSRFToken": csrftoken || "",
             },
-            mode: 'same-origin',
             credentials: 'include',
         })
+        if(response.ok){
+            onClose()
+        }
 
     }
     async function registerUser(e: React.SubmitEvent) {
@@ -25,16 +27,18 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
         const register_URL= import.meta.env.VITE_OPENINGS_API_BASE_URL + import.meta.env.VITE_OPENINGS_API_REGISTER
         const csrftoken = getCookie('csrftoken')
 
-        await fetch(register_URL, {
+        const response= await fetch(register_URL, {
             method: 'POST',
             body: formData,
             headers: {
                 "X-CSRFToken": csrftoken || "",
             },
-            mode: 'same-origin',
             credentials: 'include'
         })
-        console.log("registered user. csrftoken=", csrftoken)
+        if (response.ok) {
+
+            onClose()
+        }
     }
 
     if (authMethod === 'login') {
@@ -50,7 +54,7 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
                 <div className={styles.body}>
                     <form className={styles.authForm} onSubmit={loginUser}>
                         <label htmlFor="name">
-                            Email
+                            Name
                             <input name={'name'} type={'text'} placeholder={'name'}></input>
                         </label>
                         <label htmlFor="email">
@@ -80,7 +84,7 @@ export default function AuthModal({onClose}: {onClose: () => void}) {
                 <div className={styles.body}>
                     <form className={styles.authForm} onSubmit={registerUser}>
                         <label htmlFor="name">
-                            Email
+                            Name
                             <input name={'name'} type={'text'} placeholder={'name'}></input>
                         </label>
                         <label htmlFor="email">
