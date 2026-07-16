@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import styles from './Analysis.module.css'
-export default function Analysis(){
+import NodeGraph from './NodeGraph.tsx'
+export default function Analysis({onPositionSelection, openingPositions}){
     const [analysisDisplay, setAnalysisDisplay] = useState('nodes')
 
     function handleNavBarSelection(navSelection: string){
@@ -11,9 +12,13 @@ export default function Analysis(){
     function setAnalysisBody(){
         switch(analysisDisplay){
             case 'nodes':
-                return (<div className={styles.analysisBody}>{analysisDisplay}</div>)
+                return (
+                    <div className={styles.analysisBody}>
+                        <NodeGraph openingPositions={openingPositions}></NodeGraph>
+                    </div>
+            )
             case 'settings':
-                return (<div className={styles.analysisBody}>{analysisDisplay}</div>)
+                return (<div className={styles.analysisBody}>{`${analysisDisplay} + flip orientation on move`}</div>)
         }
     }
     return (
