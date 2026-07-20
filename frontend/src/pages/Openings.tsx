@@ -6,10 +6,13 @@ import styles from './Openings.module.css'
 import {Chess} from 'chess.js'
 import {useState} from 'react'
 
+type nextPositions = Map<string,PathNode>
+
 interface PathNode {
     fen: string;
     id: number;
-    nextPositions: Map<number, PathNode>;
+    san: string;
+    nextPositions: nextPositions;
 }
 
 interface PathMessage {
@@ -41,7 +44,7 @@ function Openings() {
     const [activePosition, setActivePosition] = useState({
         id: nodeId,
         fen: logicBoard.fen(),
-        nextPositions: new Map<number, PathNode>()
+        nextPositions: new Map<string, PathNode>()
     })
     const [positionMap, setPositionMap] = useState<Map<number, PathNode>>(new Map([[nodeId, activePosition]]))
     const [positionsArray, setPositionsArray] = useState([activePosition])
@@ -65,7 +68,7 @@ function Openings() {
         try {
             const move = logicBoard.move({from: e.sourceSquare, to: e.targetSquare});
             setBoardPosition(logicBoard.fen())
-            const movePosition: PathNode = {id: nodeId + 1, fen: logicBoard.fen(), nextPositions: new Map()}
+            const movePosition: PathNode = {id: nodeId + 1, san: move.san,  fen: logicBoard.fen(), nextPositions: new Map()}
             setPositionMap(positionMap.set(nodeId, movePosition))
             activePosition.nextPositions.set(move.san, movePosition)
             setPositionsArray(positionsArray.concat([movePosition]))

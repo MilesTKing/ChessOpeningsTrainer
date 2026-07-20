@@ -14,7 +14,7 @@ export default function Analysis({onPositionSelection, openingPositions}){
             case 'nodes':
                 return (
                     <div className={styles.analysisBody}>
-                        <NodeGraph openingPositions={openingPositions}></NodeGraph>
+                        <NodeGraph openingPositions={openingPositions} onNodeSelection={onPositionSelection}></NodeGraph>
                     </div>
             )
             case 'settings':

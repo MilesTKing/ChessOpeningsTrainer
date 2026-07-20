@@ -4,7 +4,7 @@ import '@xyflow/react/dist/style.css';
 
 type positionNode= {id: string, position: {x:number, y:number}, data: {label: string, nextPositions: Map<number, {}>}}
 
-export default function NodeGraph({openingPositions}) {
+export default function NodeGraph({openingPositions, onNodeSelection}) {
     const nodes = generatePositionNodes(openingPositions)
     const edges = generateEdges(nodes)
     console.log(`nodes len: ${nodes.length} `)
@@ -25,7 +25,7 @@ export default function NodeGraph({openingPositions}) {
             console.log(`posCount: ${posCount++}`)
             const id = openingPosition.id.toString();
             const position= {x:0,y:yaxis};
-            const data = {label: openingPosition.fen, nextPositions: openingPosition.nextPositions}
+            const data = {label: openingPosition.san, nextPositions: openingPosition.nextPositions}
             console.log(`node id: ${id}`)
             nodeList.push({id, position, data});
         }
@@ -35,8 +35,9 @@ export default function NodeGraph({openingPositions}) {
         const edgeList = []
         let edgeIdCounter=0
         for(const node of nodes){
-            for(const position of node.data.nextPositions.values()){
+            for(const [san,position] of node.data.nextPositions){
                 console.log(`position: ${position.id}`)
+                console.log(`san: ${san}`)
                 edgeIdCounter++
                 edgeList.push({id: edgeIdCounter.toString(), source: node.id.toString(), target: position.id.toString()})
             }
