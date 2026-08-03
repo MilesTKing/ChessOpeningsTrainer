@@ -5,7 +5,7 @@ import '@xyflow/react/dist/style.css';
 type positionNode= {id: string, position: {x:number, y:number}, data: {label: string, nextPositions: Map<number, {}>}}
 
 export default function NodeGraph({openingPositions, onNodeSelection}) {
-    const nodes = generatePositionNodes(openingPositions)
+    const nodes = generatePositionNodes(openingPositions) || []
     const edges = generateEdges(nodes)
     console.log(`nodes len: ${nodes.length} `)
     console.log()
@@ -25,9 +25,9 @@ export default function NodeGraph({openingPositions, onNodeSelection}) {
             console.log(`posCount: ${posCount++}`)
             const id = openingPosition.id.toString();
             const position= {x:0,y:yaxis};
-            const data = {label: openingPosition.san, nextPositions: openingPosition.nextPositions}
+            const data = {label: openingPosition.san , nextPositions: openingPosition.nextPositions}
             console.log(`node id: ${id}`)
-            nodeList.push({id, position, data});
+            nodeList.push({id, position, data, selectable: true, deletable: true});
         }
         return nodeList
     }
@@ -46,7 +46,15 @@ export default function NodeGraph({openingPositions, onNodeSelection}) {
     }
 
     return (
-            <ReactFlow nodes={nodes} edges={edges} fitView>
+            <ReactFlow nodes={nodes} edges={edges} onNodesChange={(e)=>{
+                for(const node of e){
+                    console.log(node)
+                    console.log(`node: ${node.id} selected: ${node.selected}`)
+                    if(node.selected){
+                        onNodeSelection(+node.id)
+                    }
+                }
+            }} fitView>
                 <Background/>
                 <Controls/>
             </ReactFlow>

@@ -40,14 +40,14 @@ type onDropEvent = {
 function Openings() {
     const logicBoard = new Chess()
     const [boardPosition, setBoardPosition] = useState(logicBoard.fen())
-    const [nodeId, setNodeId] = useState(0)
+    const [nextNodeId, setNextNodeId] = useState(0)
     const [activePosition, setActivePosition] = useState({
-        id: nodeId,
+        id: nextNodeId,
         fen: logicBoard.fen(),
         nextPositions: new Map<string, PathNode>()
     })
-    const [positionMap, setPositionMap] = useState<Map<number, PathNode>>(new Map([[nodeId, activePosition]]))
-    const [positionsArray, setPositionsArray] = useState([activePosition])
+    const [positionMap, setPositionMap] = useState<Map<number, PathNode>>(new Map([[nextNodeId, activePosition]]))
+    const [positionsArray, setPositionsArray] = useState([])
     logicBoard.load(boardPosition)
 
     const graphicChessboardOptions = {
@@ -68,12 +68,12 @@ function Openings() {
         try {
             const move = logicBoard.move({from: e.sourceSquare, to: e.targetSquare});
             setBoardPosition(logicBoard.fen())
-            const movePosition: PathNode = {id: nodeId + 1, san: move.san,  fen: logicBoard.fen(), nextPositions: new Map()}
-            setPositionMap(positionMap.set(nodeId, movePosition))
+            const movePosition: PathNode = {id: nextNodeId, san: move.san,  fen: logicBoard.fen(), nextPositions: new Map()}
+            setPositionMap(positionMap.set(nextNodeId, movePosition))
             activePosition.nextPositions.set(move.san, movePosition)
             setPositionsArray(positionsArray.concat([movePosition]))
             console.log(`pos len: ${positionsArray.length}`)
-            setNodeId(nodeId+1)
+            setNextNodeId(nextNodeId+1)
 
         } catch (e) {
             console.error('move error');
@@ -84,6 +84,8 @@ function Openings() {
         const position = positionMap.get(id)
         if (position) {
             setActivePosition(position)
+            setBoardPosition(position.fen)
+            console.log(`set position, id: ${id}, fen: ${position.fen}`)
         } else {
             throw new Error("No position matches given id.")
         }
