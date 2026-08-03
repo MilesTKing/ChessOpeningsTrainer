@@ -42,12 +42,12 @@ function Openings() {
     const [boardPosition, setBoardPosition] = useState(logicBoard.fen())
     const [nextNodeId, setNextNodeId] = useState(0)
     const [activePosition, setActivePosition] = useState({
-        id: nextNodeId,
+        id: -1,
         fen: logicBoard.fen(),
         nextPositions: new Map<string, PathNode>()
     })
     const [positionMap, setPositionMap] = useState<Map<number, PathNode>>(new Map([[nextNodeId, activePosition]]))
-    const [positionsArray, setPositionsArray] = useState([])
+    const [positionsArray, setPositionsArray] = useState(new Array())
     logicBoard.load(boardPosition)
 
     const graphicChessboardOptions = {
@@ -72,8 +72,8 @@ function Openings() {
             setPositionMap(positionMap.set(nextNodeId, movePosition))
             activePosition.nextPositions.set(move.san, movePosition)
             setPositionsArray(positionsArray.concat([movePosition]))
-            console.log(`pos len: ${positionsArray.length}`)
             setNextNodeId(nextNodeId+1)
+            setActivePosition(movePosition)
 
         } catch (e) {
             console.error('move error');

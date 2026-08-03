@@ -27,7 +27,6 @@ async function bootstrap() {
             credentials: "include"
     }
     )
-    console.log(`csrf: ${getCookie('csrftoken')}`)
     createRoot(document.getElementById('root')!).render(
         <StrictMode>
             <RouterProvider router={router}></RouterProvider>
