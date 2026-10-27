@@ -1,6 +1,6 @@
-import { ReactFlow} from '@xyflow/react';
-import { BaseEdge, getSmoothStepPath, Background, Controls } from '@xyflow/react';
+import { ReactFlow, applyEdgeChanges, applyNodeChanges, Background, Controls } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { useState, useCallback } from 'react';
 
 type positionNode= {id: string, position: {x:number, y:number}, data: {label: string, nextPositions: Map<number, {}>}}
 
@@ -10,7 +10,6 @@ export default function NodeGraph({openingPositions, onNodeSelection}) {
 
     function generatePositionNodes(openingPositions: {id: number, fen: string, nextPositions: Map<number, number>}[]) {
         const nodeList = []
-        let posCount= 0
         let yaxis= 0;
         for(const openingPosition of openingPositions){
             yaxis+=120
@@ -26,8 +25,9 @@ export default function NodeGraph({openingPositions, onNodeSelection}) {
         let edgeIdCounter=0
         for(const node of nodes){
 
-            for(const [san,position] of node.data.nextPositions){
+            for(const position of node.data.nextPositions.values()){
                 edgeIdCounter++
+                console.log(`from ${node.id.toString()} to ${position.id.toString()}`)
                 edgeList.push({id: edgeIdCounter.toString(), source: node.id.toString(), target: position.id.toString()})
             }
         }
@@ -35,13 +35,13 @@ export default function NodeGraph({openingPositions, onNodeSelection}) {
     }
 
     return (
-            <ReactFlow nodes={nodes} edges={edges} onNodesChange={(e)=>{
+            <ReactFlow nodes={nodes} edges={edges} nodesDraggable={true} onNodesChange={(e)=>{
                 for(const node of e){
                     if(node.selected){
                         onNodeSelection(+node.id)
                     }
                 }
-            }} fitView>
+            }} >
                 <Background/>
                 <Controls/>
             </ReactFlow>
