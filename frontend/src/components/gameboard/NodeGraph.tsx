@@ -33,20 +33,20 @@ export default function NodeGraph({openingPositions, onNodeSelection}) {
         const nodeMap = new Map()
 
         for (const edge of edges) {
-            if (edge.source in nodeMap) {
-                nodeMap.get(edge.source).push(edge.target)
-            }
+            if (!nodeMap.has(edge.source)) {
+                nodeMap.set(edge.source, [edge.target])
 
-            nodeMap.set(edge.source, [edge.target])
+            }
+            nodeMap.get(edge.source).push(edge.target)
         }
-        nodeMap.forEach((value, key, map) => {
-                const parent_Node = getNode(newNodes, key) as positionNode
-                const x_offset = 100
-                let x = -(x_offset * map.get(key).length / 2) * value
-                for (const child_node_id of value) {
-                    const node = getNode(newNodes, child_node_id) as positionNode
-                    console.log(`child ${child_node_id} x: ${x}`)
-                    node.position = {x: x, y: parent_Node.position.y + 120}
+        const xOffset = 200
+        nodeMap.forEach((children, parentId) => {
+            const parentNode = getNode(newNodes, parentId) as positionNode
+            let x = parentNode.position.x - (xOffset * (children.length - 1)) / 2;
+                for (const childId of children) {
+                    const node = getNode(newNodes, childId) as positionNode
+                    node.position = {x, y: parentNode.position.y + 80}
+                    x += xOffset
                 }
             }
         )
@@ -55,11 +55,15 @@ export default function NodeGraph({openingPositions, onNodeSelection}) {
         setEdges(edges);
     }, [openingPositions]);
 
-    function generatePositionNodes(openingPositions: { id: number, fen: string, nextPositions: Map<number, number> }[]) {
+    function generatePositionNodes(openingPositions: {
+        id: number,
+        fen: string,
+        nextPositions: Map<number, number>
+    }[]) {
         const nodeList = []
         let yaxis = 0;
         for (const openingPosition of openingPositions) {
-            yaxis += 120
+            yaxis += 80
             const id = openingPosition.id.toString();
             const position = {x: 0, y: yaxis};
             const data = {label: openingPosition.san, nextPositions: openingPosition.nextPositions}
@@ -76,8 +80,11 @@ export default function NodeGraph({openingPositions, onNodeSelection}) {
 
             for (const position of node.data.nextPositions.values()) {
                 edgeIdCounter++
-                console.log(`from ${node.id.toString()} to ${position.id.toString()}`)
-                edgeList.push({id: edgeIdCounter.toString(), source: node.id.toString(), target: position.id.toString()})
+                edgeList.push({
+                    id: edgeIdCounter.toString(),
+                    source: node.id.toString(),
+                    target: position.id.toString()
+                })
             }
         }
         return edgeList
