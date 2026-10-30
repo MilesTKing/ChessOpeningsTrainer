@@ -66,7 +66,16 @@ function Openings() {
 
     function addNextMove(e: onDropEvent) {
         try {
+            const currentPositionFen = logicBoard.fen
             const move = logicBoard.move({from: e.sourceSquare, to: e.targetSquare});
+            const fen = logicBoard.fen()
+            const existingPosition = positionsArray.find((position) => position.fen === fen);
+            if (existingPosition) {
+                setActivePosition(existingPosition)
+                setBoardPosition(existingPosition.fen)
+                console.log('existing position found')
+                return
+            }
             setBoardPosition(logicBoard.fen())
             const movePosition: PathNode = {id: nextNodeId, san: move.san,  fen: logicBoard.fen(), nextPositions: new Map()}
             setPositionMap(positionMap.set(nextNodeId, movePosition))
