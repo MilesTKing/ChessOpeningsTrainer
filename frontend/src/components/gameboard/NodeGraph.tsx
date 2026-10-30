@@ -42,7 +42,8 @@ export default function NodeGraph({openingPositions, onNodeSelection}) {
         const xOffset = 200
         nodeMap.forEach((children, parentId) => {
             const parentNode = getNode(newNodes, parentId) as positionNode
-            let x = parentNode.position.x - (xOffset * (children.length - 1)) / 2;
+            let x = parentNode.position.x - (xOffset * (children.length)) / 2;
+
                 for (const childId of children) {
                     const node = getNode(newNodes, childId) as positionNode
                     node.position = {x, y: parentNode.position.y + 80}
